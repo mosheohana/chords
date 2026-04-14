@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chord Timeline</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="player-area" aria-label="נגן אקורדים">
+        <div class="track-visual">
+          <img
+            src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=900&q=80"
+            alt="גיטרה ומקלדת באולפן"
+          >
+        </div>
+
+        <div class="now-panel">
+          <p class="eyebrow">האקורד שמנוגן עכשיו</p>
+          <h1 id="currentChord">--</h1>
+          <p id="currentRange">לחץ Play כדי להתחיל</p>
+          <audio id="audio" controls preload="metadata" src="song.mp3"></audio>
+
+          <div class="time-row">
+            <span id="elapsed">0:00</span>
+            <div class="progress-track" aria-hidden="true">
+              <div id="progressFill"></div>
+            </div>
+            <span id="duration">0:00</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="timeline-section" aria-label="ציר זמן">
+        <div class="section-heading">
+          <h2>ציר האקורדים</h2>
+          <p id="chordCount">טוען אקורדים...</p>
+        </div>
+        <div id="timeline" class="timeline"></div>
+      </section>
+
+      <section class="lyrics-section" aria-label="מילים מסונכרנות">
+        <div class="section-heading">
+          <h2>מילים על הזמן</h2>
+          <p id="lyricsStatus">טוען מילים...</p>
+        </div>
+        <div id="lyricsLine" class="lyrics-line"></div>
+      </section>
+
+      <section class="next-section" aria-label="האקורדים הקרובים">
+        <div class="section-heading">
+          <h2>המשך</h2>
+          <p id="nextLabel">האקורדים הבאים יופיעו כאן בזמן הנגינה.</p>
+        </div>
+        <div id="upNext" class="up-next"></div>
+      </section>
+    </main>
+
+    <script src="app.js?v=lyrics-1"></script>
+  </body>
+</html>

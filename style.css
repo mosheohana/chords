@@ -1,0 +1,279 @@
+:root {
+  --paper: #fbfbf7;
+  --ink: #171714;
+  --muted: #68665f;
+  --line: #d9d6ca;
+  --teal: #0f8f84;
+  --coral: #dc4f3f;
+  --gold: #f1c84b;
+  --mint: #dff4eb;
+  --white: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: Arial, "Noto Sans Hebrew", sans-serif;
+}
+
+.app-shell {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 28px 0 44px;
+}
+
+.player-area {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.8fr) minmax(320px, 1.2fr);
+  gap: 22px;
+  align-items: stretch;
+}
+
+.track-visual {
+  min-height: 360px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--mint);
+}
+
+.track-visual img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.now-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 360px;
+  padding: 30px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--white);
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  color: var(--coral);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 8px;
+  font-size: clamp(5rem, 8rem, 8rem);
+  line-height: 0.95;
+  letter-spacing: 0;
+}
+
+h2 {
+  margin-bottom: 0;
+  font-size: 1.5rem;
+  letter-spacing: 0;
+}
+
+#currentRange {
+  margin-bottom: 24px;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+audio {
+  width: 100%;
+  margin-bottom: 18px;
+}
+
+.time-row {
+  display: grid;
+  grid-template-columns: 56px 1fr 56px;
+  gap: 10px;
+  align-items: center;
+  direction: ltr;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.progress-track {
+  height: 12px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #efeee8;
+}
+
+#progressFill {
+  width: 0%;
+  height: 100%;
+  background: var(--teal);
+  transition: width 120ms linear;
+}
+
+.timeline-section,
+.lyrics-section,
+.next-section {
+  margin-top: 26px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: end;
+  margin-bottom: 14px;
+}
+
+.section-heading p {
+  margin-bottom: 0;
+  color: var(--muted);
+}
+
+.timeline {
+  display: flex;
+  min-height: 96px;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--white);
+}
+
+.segment {
+  position: relative;
+  display: flex;
+  flex: 0 0 var(--segment-width);
+  min-width: 54px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 10px;
+  border-inline-start: 1px solid var(--line);
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 140ms ease, color 140ms ease;
+}
+
+.segment:first-child {
+  border-inline-start: 0;
+}
+
+.segment.active {
+  background: var(--teal);
+  color: var(--white);
+}
+
+.segment strong {
+  font-size: 1.15rem;
+  letter-spacing: 0;
+}
+
+.segment span {
+  color: currentColor;
+  font-size: 0.82rem;
+  opacity: 0.72;
+  direction: ltr;
+  text-align: right;
+}
+
+.lyrics-line {
+  min-height: 100px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--mint);
+  font-size: 1.4rem;
+  line-height: 1.8;
+}
+
+.word {
+  position: relative;
+  display: inline-block;
+  margin: 18px 4px 0;
+  padding: 0 3px;
+}
+
+.word::before {
+  content: attr(data-chord);
+  position: absolute;
+  right: 50%;
+  bottom: 100%;
+  transform: translateX(50%);
+  color: var(--coral);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.active-word {
+  background: var(--gold);
+  border-radius: 6px;
+}
+
+.up-next {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 10px;
+}
+
+.next-card {
+  min-height: 74px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--white);
+}
+
+.next-card strong {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 1.35rem;
+}
+
+.next-card span {
+  color: var(--muted);
+  font-size: 0.88rem;
+  direction: ltr;
+  display: inline-block;
+}
+
+@media (max-width: 760px) {
+  .app-shell {
+    width: min(100% - 20px, 1180px);
+    padding-top: 10px;
+  }
+
+  .player-area {
+    grid-template-columns: 1fr;
+  }
+
+  .track-visual,
+  .now-panel {
+    min-height: 260px;
+  }
+
+  .now-panel {
+    padding: 22px;
+  }
+
+  h1 {
+    font-size: clamp(4.2rem, 7rem, 7rem);
+  }
+
+  .section-heading {
+    display: block;
+  }
+}
