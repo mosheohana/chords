@@ -1,0 +1,452 @@
+[
+  {
+    "start": 0.6,
+    "end": 2.3,
+    "chord": "D#m"
+  },
+  {
+    "start": 2.3,
+    "end": 3.8,
+    "chord": "G#"
+  },
+  {
+    "start": 3.8,
+    "end": 5.5,
+    "chord": "C#m"
+  },
+  {
+    "start": 5.5,
+    "end": 7.1,
+    "chord": "A"
+  },
+  {
+    "start": 7.1,
+    "end": 8.7,
+    "chord": "F#m"
+  },
+  {
+    "start": 8.7,
+    "end": 10.7,
+    "chord": "D#"
+  },
+  {
+    "start": 10.7,
+    "end": 11.7,
+    "chord": "G#"
+  },
+  {
+    "start": 11.7,
+    "end": 12.5,
+    "chord": "D#m"
+  },
+  {
+    "start": 12.5,
+    "end": 16.5,
+    "chord": "G#"
+  },
+  {
+    "start": 16.5,
+    "end": 19.7,
+    "chord": "C#m"
+  },
+  {
+    "start": 19.7,
+    "end": 21.8,
+    "chord": "C#"
+  },
+  {
+    "start": 21.8,
+    "end": 23.5,
+    "chord": "G#"
+  },
+  {
+    "start": 23.5,
+    "end": 25.3,
+    "chord": "E"
+  },
+  {
+    "start": 25.3,
+    "end": 27.2,
+    "chord": "F#m"
+  },
+  {
+    "start": 27.2,
+    "end": 28.8,
+    "chord": "C#m"
+  },
+  {
+    "start": 28.8,
+    "end": 30.5,
+    "chord": "B"
+  },
+  {
+    "start": 30.5,
+    "end": 32.2,
+    "chord": "E"
+  },
+  {
+    "start": 32.2,
+    "end": 34.0,
+    "chord": "B"
+  },
+  {
+    "start": 34.0,
+    "end": 35.8,
+    "chord": "E"
+  },
+  {
+    "start": 35.8,
+    "end": 39.5,
+    "chord": "D#"
+  },
+  {
+    "start": 39.5,
+    "end": 41.0,
+    "chord": "C#m"
+  },
+  {
+    "start": 41.0,
+    "end": 45.0,
+    "chord": "F#m"
+  },
+  {
+    "start": 45.0,
+    "end": 46.5,
+    "chord": "D#m"
+  },
+  {
+    "start": 46.5,
+    "end": 48.9,
+    "chord": "G#"
+  },
+  {
+    "start": 48.9,
+    "end": 66.1,
+    "chord": "C#m"
+  },
+  {
+    "start": 66.1,
+    "end": 71.2,
+    "chord": "C#"
+  },
+  {
+    "start": 71.2,
+    "end": 75.2,
+    "chord": "F#m"
+  },
+  {
+    "start": 75.2,
+    "end": 76.3,
+    "chord": "D#m"
+  },
+  {
+    "start": 76.3,
+    "end": 78.2,
+    "chord": "G#"
+  },
+  {
+    "start": 78.2,
+    "end": 79.8,
+    "chord": "C#m"
+  },
+  {
+    "start": 79.8,
+    "end": 81.5,
+    "chord": "A"
+  },
+  {
+    "start": 81.5,
+    "end": 83.6,
+    "chord": "F#m"
+  },
+  {
+    "start": 83.6,
+    "end": 85.0,
+    "chord": "D#"
+  },
+  {
+    "start": 85.0,
+    "end": 90.0,
+    "chord": "G#"
+  },
+  {
+    "start": 90.0,
+    "end": 96.1,
+    "chord": "C#m"
+  },
+  {
+    "start": 96.1,
+    "end": 96.9,
+    "chord": "F#m"
+  },
+  {
+    "start": 96.9,
+    "end": 100.4,
+    "chord": "C#m"
+  },
+  {
+    "start": 100.4,
+    "end": 105.5,
+    "chord": "C#"
+  },
+  {
+    "start": 105.5,
+    "end": 109.3,
+    "chord": "F#m"
+  },
+  {
+    "start": 109.3,
+    "end": 110.6,
+    "chord": "D#m"
+  },
+  {
+    "start": 110.6,
+    "end": 112.3,
+    "chord": "G#"
+  },
+  {
+    "start": 112.3,
+    "end": 114.2,
+    "chord": "C#m"
+  },
+  {
+    "start": 114.2,
+    "end": 115.8,
+    "chord": "A"
+  },
+  {
+    "start": 115.8,
+    "end": 117.8,
+    "chord": "F#m"
+  },
+  {
+    "start": 117.8,
+    "end": 119.5,
+    "chord": "G#"
+  },
+  {
+    "start": 119.5,
+    "end": 131.6,
+    "chord": "C#m"
+  },
+  {
+    "start": 131.6,
+    "end": 133.2,
+    "chord": "G#"
+  },
+  {
+    "start": 133.2,
+    "end": 135.1,
+    "chord": "E"
+  },
+  {
+    "start": 135.1,
+    "end": 136.9,
+    "chord": "F#m"
+  },
+  {
+    "start": 136.9,
+    "end": 138.5,
+    "chord": "C#m"
+  },
+  {
+    "start": 138.5,
+    "end": 140.1,
+    "chord": "B"
+  },
+  {
+    "start": 140.1,
+    "end": 141.9,
+    "chord": "E"
+  },
+  {
+    "start": 141.9,
+    "end": 143.6,
+    "chord": "B"
+  },
+  {
+    "start": 143.6,
+    "end": 145.3,
+    "chord": "E"
+  },
+  {
+    "start": 145.3,
+    "end": 149.0,
+    "chord": "D#"
+  },
+  {
+    "start": 149.0,
+    "end": 150.5,
+    "chord": "C#m"
+  },
+  {
+    "start": 150.5,
+    "end": 154.2,
+    "chord": "F#m"
+  },
+  {
+    "start": 154.2,
+    "end": 156.7,
+    "chord": "D#m"
+  },
+  {
+    "start": 156.7,
+    "end": 158.0,
+    "chord": "Am"
+  },
+  {
+    "start": 158.0,
+    "end": 161.9,
+    "chord": "C#m"
+  },
+  {
+    "start": 161.9,
+    "end": 164.3,
+    "chord": "C#"
+  },
+  {
+    "start": 164.3,
+    "end": 167.5,
+    "chord": "C#m"
+  },
+  {
+    "start": 167.5,
+    "end": 168.2,
+    "chord": "F#m"
+  },
+  {
+    "start": 168.2,
+    "end": 175.0,
+    "chord": "C#m"
+  },
+  {
+    "start": 175.0,
+    "end": 180.0,
+    "chord": "C#"
+  },
+  {
+    "start": 180.0,
+    "end": 184.5,
+    "chord": "F#m"
+  },
+  {
+    "start": 184.5,
+    "end": 185.2,
+    "chord": "D#m"
+  },
+  {
+    "start": 185.2,
+    "end": 187.0,
+    "chord": "G#"
+  },
+  {
+    "start": 187.0,
+    "end": 188.9,
+    "chord": "C#m"
+  },
+  {
+    "start": 188.9,
+    "end": 190.4,
+    "chord": "A"
+  },
+  {
+    "start": 190.4,
+    "end": 192.3,
+    "chord": "F#m"
+  },
+  {
+    "start": 192.3,
+    "end": 193.3,
+    "chord": "B"
+  },
+  {
+    "start": 193.3,
+    "end": 194.1,
+    "chord": "D#m"
+  },
+  {
+    "start": 194.1,
+    "end": 198.9,
+    "chord": "G#"
+  },
+  {
+    "start": 198.9,
+    "end": 201.6,
+    "chord": "C#m"
+  },
+  {
+    "start": 201.6,
+    "end": 202.4,
+    "chord": "F#m"
+  },
+  {
+    "start": 202.4,
+    "end": 209.2,
+    "chord": "C#m"
+  },
+  {
+    "start": 209.2,
+    "end": 214.5,
+    "chord": "C#"
+  },
+  {
+    "start": 214.5,
+    "end": 218.3,
+    "chord": "F#m"
+  },
+  {
+    "start": 218.3,
+    "end": 219.5,
+    "chord": "D#m"
+  },
+  {
+    "start": 219.5,
+    "end": 221.3,
+    "chord": "G#"
+  },
+  {
+    "start": 221.3,
+    "end": 223.0,
+    "chord": "C#m"
+  },
+  {
+    "start": 223.0,
+    "end": 224.7,
+    "chord": "A"
+  },
+  {
+    "start": 224.7,
+    "end": 226.6,
+    "chord": "F#m"
+  },
+  {
+    "start": 226.6,
+    "end": 228.4,
+    "chord": "G#"
+  },
+  {
+    "start": 228.4,
+    "end": 231.3,
+    "chord": "C#m"
+  },
+  {
+    "start": 231.3,
+    "end": 235.0,
+    "chord": "A"
+  },
+  {
+    "start": 235.0,
+    "end": 237.3,
+    "chord": "F#m"
+  },
+  {
+    "start": 237.3,
+    "end": 240.8,
+    "chord": "G#"
+  },
+  {
+    "start": 240.8,
+    "end": 248.4,
+    "chord": "C#m"
+  }
+]

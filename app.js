@@ -4,6 +4,10 @@ const currentRange = document.querySelector("#currentRange");
 const elapsed = document.querySelector("#elapsed");
 const duration = document.querySelector("#duration");
 const progressFill = document.querySelector("#progressFill");
+const audioFile = document.querySelector("#audioFile");
+const chordsFile = document.querySelector("#chordsFile");
+const audioFileName = document.querySelector("#audioFileName");
+const beatsPerChordInput = document.querySelector("#beatsPerChord");
 const timeline = document.querySelector("#timeline");
 const chordCount = document.querySelector("#chordCount");
 const upNext = document.querySelector("#upNext");
@@ -15,6 +19,7 @@ let chords = [];
 let lyrics = [];
 let activeIndex = -1;
 let activeLyricIndex = -1;
+let selectedAudioUrl = null;
 
 function formatTime(seconds) {
   if (!Number.isFinite(seconds)) {
@@ -125,7 +130,7 @@ function renderTimeline() {
 
   chords.forEach((item, index) => {
     const segment = document.createElement("button");
-    const width = Math.max(((item.end - item.start) / total) * 1800, 54);
+    const width = Math.max(((item.end - item.start) / total) * 2600, 92);
     segment.className = "segment";
     segment.type = "button";
     segment.style.setProperty("--segment-width", `${width}px`);
@@ -142,6 +147,15 @@ function renderTimeline() {
   });
 
   chordCount.textContent = `${chords.length} מקטעי אקורדים`;
+}
+
+function setChords(nextChords) {
+  chords = nextChords;
+  activeIndex = -1;
+  renderTimeline();
+  setActiveChord(findChordIndex(audio.currentTime));
+  estimateLyricTimes();
+  renderLyricLine(findLyricIndex(audio.currentTime), audio.currentTime);
 }
 
 function renderUpNext(index) {
@@ -209,6 +223,114 @@ function updatePlaybackUi() {
   renderLyricLine(lyricIndex, currentTime);
 }
 
+function loadSelectedAudioPreview(file) {
+  if (!file) {
+    return;
+  }
+
+  if (selectedAudioUrl) {
+    URL.revokeObjectURL(selectedAudioUrl);
+  }
+
+  selectedAudioUrl = URL.createObjectURL(file);
+  audio.pause();
+  audio.src = selectedAudioUrl;
+  audio.load();
+  activeIndex = -1;
+  activeLyricIndex = -1;
+
+  elapsed.textContent = "0:00";
+  duration.textContent = "0:00";
+  progressFill.style.width = "0%";
+  currentRange.textContent = "קובץ חדש נטען. האקורדים עדיין מגיעים מ-chords.json";
+
+  if (audioFileName) {
+    audioFileName.textContent = `נטען כרגע: ${file.name}`;
+  }
+
+  updatePlaybackUi();
+}
+
+async function analyzeSelectedAudio(file) {
+  if (!file) {
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("audio", file);
+  formData.append("beatsPerChord", beatsPerChordInput?.value || "4");
+
+  if (audioFileName) {
+    audioFileName.textContent = `מנתח אקורדים עבור: ${file.name}`;
+  }
+  currentRange.textContent = "מעלה קובץ ומחשב אקורדים...";
+
+  try {
+    const response = await fetch("/api/analyze-audio", {
+      method: "POST",
+      body: formData,
+    });
+
+    const result = await response.json();
+    if (!response.ok) {
+      throw new Error(result.error || `HTTP ${response.status}`);
+    }
+
+    if (selectedAudioUrl) {
+      URL.revokeObjectURL(selectedAudioUrl);
+      selectedAudioUrl = null;
+    }
+
+    audio.pause();
+    audio.src = result.audioUrl;
+    audio.load();
+    setChords(result.chords);
+    elapsed.textContent = "0:00";
+    duration.textContent = "0:00";
+    progressFill.style.width = "0%";
+
+    if (audioFileName) {
+      audioFileName.textContent = `נטען ונותח: ${file.name} (${Math.round(result.tempo)} BPM)`;
+    }
+    currentRange.textContent = `נוצרו ${result.chords.length} מקטעי אקורדים`;
+  } catch (error) {
+    loadSelectedAudioPreview(file);
+    if (audioFileName) {
+      audioFileName.textContent = `נטען מקומית ללא אקורדים חדשים: ${file.name}`;
+    }
+    currentRange.textContent = `השרת לא ניתח את הקובץ: ${error.message}`;
+  }
+}
+
+function validateChordRows(rows) {
+  return Array.isArray(rows) && rows.every((row) => (
+    Number.isFinite(row.start)
+    && Number.isFinite(row.end)
+    && typeof row.chord === "string"
+  ));
+}
+
+async function loadSelectedChordsFile(file) {
+  if (!file) {
+    return;
+  }
+
+  try {
+    const text = await file.text();
+    const parsed = JSON.parse(text);
+
+    if (!validateChordRows(parsed)) {
+      throw new Error("הקובץ צריך להיות מערך של start/end/chord");
+    }
+
+    setChords(parsed);
+    currentRange.textContent = `נטענו ${parsed.length} אקורדים מתוך ${file.name}`;
+    chordCount.textContent = `${parsed.length} מקטעי אקורדים (${file.name})`;
+  } catch (error) {
+    currentRange.textContent = `לא הצלחתי לטעון JSON: ${error.message}`;
+  }
+}
+
 async function loadChords() {
   try {
     const response = await fetch(`chords.json?v=${Date.now()}`, { cache: "no-store" });
@@ -247,6 +369,12 @@ audio.addEventListener("loadedmetadata", updatePlaybackUi);
 audio.addEventListener("timeupdate", updatePlaybackUi);
 audio.addEventListener("play", updatePlaybackUi);
 audio.addEventListener("seeked", updatePlaybackUi);
+audioFile?.addEventListener("change", (event) => {
+  analyzeSelectedAudio(event.target.files?.[0]);
+});
+chordsFile?.addEventListener("change", (event) => {
+  loadSelectedChordsFile(event.target.files?.[0]);
+});
 
 async function init() {
   await loadChords();

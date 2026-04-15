@@ -20,6 +20,19 @@
           <p class="eyebrow">האקורד שמנוגן עכשיו</p>
           <h1 id="currentChord">--</h1>
           <p id="currentRange">לחץ Play כדי להתחיל</p>
+          <label class="file-picker">
+            <span>בחר קובץ שמע</span>
+            <input id="audioFile" type="file" accept="audio/*">
+          </label>
+          <label class="file-picker secondary-picker">
+            <span>בחר קובץ אקורדים JSON</span>
+            <input id="chordsFile" type="file" accept="application/json,.json">
+          </label>
+          <label class="beat-control">
+            <span>ביטים לאקורד</span>
+            <input id="beatsPerChord" type="number" min="1" max="16" step="1" value="4">
+          </label>
+          <p id="audioFileName" class="file-name">נטען כרגע: song.mp3</p>
           <audio id="audio" controls preload="metadata" src="song.mp3"></audio>
 
           <div class="time-row">
@@ -57,6 +70,6 @@
       </section>
     </main>
 
-    <script src="app.js?v=lyrics-1"></script>
+    <script src="app.js?v=timeline-wide-1"></script>
   </body>
 </html>

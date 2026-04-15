@@ -98,6 +98,62 @@ audio {
   margin-bottom: 18px;
 }
 
+.file-picker {
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  padding: 10px 14px;
+  border: 1px solid var(--ink);
+  border-radius: 8px;
+  background: var(--gold);
+  color: var(--ink);
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.secondary-picker {
+  background: var(--mint);
+}
+
+.beat-control {
+  display: flex;
+  width: min(240px, 100%);
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.beat-control input {
+  width: 76px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--white);
+  color: var(--ink);
+  font: inherit;
+}
+
+.file-picker input {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.file-name {
+  margin-bottom: 14px;
+  color: var(--muted);
+  font-size: 0.95rem;
+  word-break: break-word;
+}
+
 .time-row {
   display: grid;
   grid-template-columns: 56px 1fr 56px;
@@ -146,7 +202,7 @@ audio {
 
 .timeline {
   display: flex;
-  min-height: 96px;
+  min-height: 124px;
   overflow-x: auto;
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -157,11 +213,11 @@ audio {
   position: relative;
   display: flex;
   flex: 0 0 var(--segment-width);
-  min-width: 54px;
+  min-width: 92px;
   flex-direction: column;
   justify-content: center;
   gap: 6px;
-  padding: 12px 10px;
+  padding: 14px 12px;
   border-inline-start: 1px solid var(--line);
   color: var(--ink);
   cursor: pointer;
@@ -178,8 +234,10 @@ audio {
 }
 
 .segment strong {
-  font-size: 1.15rem;
+  overflow-wrap: anywhere;
+  font-size: 1.24rem;
   letter-spacing: 0;
+  line-height: 1.1;
 }
 
 .segment span {
