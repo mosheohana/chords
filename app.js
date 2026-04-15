@@ -6,6 +6,7 @@ const duration = document.querySelector("#duration");
 const progressFill = document.querySelector("#progressFill");
 const audioFile = document.querySelector("#audioFile");
 const chordsFile = document.querySelector("#chordsFile");
+const lyricsFile = document.querySelector("#lyricsFile");
 const audioFileName = document.querySelector("#audioFileName");
 const beatsPerChordInput = document.querySelector("#beatsPerChord");
 const timeline = document.querySelector("#timeline");
@@ -85,7 +86,7 @@ function findLyricIndex(time) {
   }
 
   if (time < lyrics[0].start) {
-    return 0;
+    return -1;
   }
 
   return lyrics.length - 1;
@@ -95,6 +96,9 @@ function renderLyricLine(index, currentTime) {
   const line = lyrics[index];
   if (!line) {
     lyricsLine.innerHTML = "";
+    if (lyricsStatus && lyrics.length) {
+      lyricsStatus.textContent = `המילים יתחילו ב-${formatTime(lyrics[0].start)}`;
+    }
     return;
   }
 
@@ -331,6 +335,50 @@ async function loadSelectedChordsFile(file) {
   }
 }
 
+function validateLyricRows(rows) {
+  return Array.isArray(rows) && rows.every((row) => (
+    typeof row.text === "string"
+    && (
+      row.start === undefined
+      || row.start === null
+      || Number.isFinite(row.start)
+    )
+    && (
+      row.end === undefined
+      || row.end === null
+      || Number.isFinite(row.end)
+    )
+  ));
+}
+
+async function loadSelectedLyricsFile(file) {
+  if (!file) {
+    return;
+  }
+
+  try {
+    const text = await file.text();
+    const parsed = JSON.parse(text);
+
+    if (!validateLyricRows(parsed)) {
+      throw new Error("הקובץ צריך להיות מערך של שורות עם text ואפשר גם start/end");
+    }
+
+    lyrics = parsed;
+    activeLyricIndex = -1;
+    estimateLyricTimes();
+    renderLyricLine(findLyricIndex(audio.currentTime), audio.currentTime);
+
+    if (lyricsStatus) {
+      lyricsStatus.textContent = `נטענו ${lyrics.length} שורות מתוך ${file.name}`;
+    }
+  } catch (error) {
+    if (lyricsStatus) {
+      lyricsStatus.textContent = `לא הצלחתי לטעון מילים: ${error.message}`;
+    }
+  }
+}
+
 async function loadChords() {
   try {
     const response = await fetch(`chords.json?v=${Date.now()}`, { cache: "no-store" });
@@ -374,6 +422,9 @@ audioFile?.addEventListener("change", (event) => {
 });
 chordsFile?.addEventListener("change", (event) => {
   loadSelectedChordsFile(event.target.files?.[0]);
+});
+lyricsFile?.addEventListener("change", (event) => {
+  loadSelectedLyricsFile(event.target.files?.[0]);
 });
 
 async function init() {
