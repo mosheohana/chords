@@ -7,17 +7,10 @@ The app can load:
 - a chord JSON file
 - a lyrics JSON file
 
-Repository:
-
-```text
-https://github.com/mosheohana/chords
-```
 
 Live site:
 
-```text
-https://chords-chi.vercel.app/
-```
+[https://chords-chi.vercel.app/]
 
 ## Project Structure
 
