@@ -13,6 +13,12 @@ Repository:
 https://github.com/mosheohana/chords
 ```
 
+Live site:
+
+```text
+https://chords-chi.vercel.app/
+```
+
 ## Project Structure
 
 ```text
@@ -63,6 +69,18 @@ data/lyrics/lyrics.json
   { "start": 20.6, "end": 31.7, "text": "Second lyric line" }
 ]
 ```
+
+## Detector Scripts
+
+## Main Tools Used
+
+- HTML, CSS, and vanilla JavaScript for the frontend.
+- Python for audio analysis scripts.
+- librosa for chroma features, beat tracking, and audio utilities.
+- madmom for chord recognition and beat tracking experiments.
+- Basic Pitch for note-based chord detection experiments.
+- NumPy for signal and vector calculations.
+- Vercel for hosting the frontend.
 
 ## Detector Scripts
 
