@@ -35,35 +35,6 @@ align_lyrics_auto.py
 server.py
 ```
 
-## Default Files
-
-The site currently loads:
-
-```text
-media/audio/song2.mp3
-data/chords/song2_chords_madmom_only.json
-data/lyrics/lyrics.json
-```
-
-## Chord JSON Format
-
-```json
-[
-  { "start": 0.0, "end": 2.45, "chord": "Am" },
-  { "start": 2.45, "end": 5.07, "chord": "Dm" }
-]
-```
-
-## Lyrics JSON Format
-
-```json
-[
-  { "start": 16.0, "end": 20.6, "text": "First lyric line" },
-  { "start": 20.6, "end": 31.7, "text": "Second lyric line" }
-]
-```
-
-## Detector Scripts
 
 ## Main Tools Used
 
