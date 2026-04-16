@@ -4,10 +4,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Chord Timeline</title>
+    <script>
+      if ("scrollRestoration" in history) {
+        history.scrollRestoration = "manual";
+      }
+      if (location.hash) {
+        history.replaceState(null, "", location.pathname + location.search);
+      }
+      scrollTo(0, 0);
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=full-width-video-1">
+    <link rel="stylesheet" href="style.css?v=hero-text-small-1">
   </head>
   <body>
     <header class="site-header">
@@ -60,8 +69,8 @@
                 <input id="beatsPerChord" type="number" min="1" max="16" step="1" value="4">
               </label>
 
-              <p id="audioFileName" class="file-name">נטען כרגע: song.mp3</p>
-              <audio id="audio" controls preload="metadata" src="song.mp3"></audio>
+              <p id="audioFileName" class="file-name">נטען כרגע: song2.mp3</p>
+              <audio id="audio" controls preload="metadata" src="song2.mp3"></audio>
 
               <div class="time-row">
                 <span id="elapsed">0:00</span>
@@ -145,6 +154,6 @@
       </section>
     </main>
 
-    <script src="app.js?v=top-reset-1"></script>
+    <script src="app.js?v=no-jump-1"></script>
   </body>
 </html>

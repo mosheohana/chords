@@ -164,6 +164,14 @@ function renderTimeline() {
   chordCount.textContent = `${chords.length} מקטעי אקורדים`;
 }
 
+function centerTimelineSegment(segment) {
+  const left = segment.offsetLeft - (timeline.clientWidth / 2) + (segment.clientWidth / 2);
+  timeline.scrollTo({
+    left,
+    behavior: "smooth",
+  });
+}
+
 function setChords(nextChords) {
   chords = nextChords;
   activeIndex = -1;
@@ -214,7 +222,7 @@ function setActiveChord(index) {
   const segment = timeline.querySelector(`[data-index="${index}"]`);
   if (segment) {
     segment.classList.add("active");
-    segment.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+    centerTimelineSegment(segment);
   }
 
   const item = chords[index];
@@ -392,7 +400,7 @@ async function loadSelectedLyricsFile(file) {
 
 async function loadChords() {
   try {
-    const response = await fetch(`chords.json?v=${Date.now()}`, { cache: "no-store" });
+    const response = await fetch(`song2_chords_madmom_only.json?v=${Date.now()}`, { cache: "no-store" });
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}`);
     }
@@ -402,7 +410,7 @@ async function loadChords() {
     setActiveChord(0);
   } catch (error) {
     currentChord.textContent = "!";
-    currentRange.textContent = "לא הצלחתי לטעון chords.json";
+    currentRange.textContent = "לא הצלחתי לטעון song2_chords_madmom_only.json";
     chordCount.textContent = error.message;
   }
 }
