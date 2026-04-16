@@ -265,7 +265,7 @@ function loadSelectedAudioPreview(file) {
   elapsed.textContent = "0:00";
   duration.textContent = "0:00";
   progressFill.style.width = "0%";
-  currentRange.textContent = "קובץ חדש נטען. האקורדים עדיין מגיעים מ-chords.json";
+  currentRange.textContent = "קובץ חדש נטען. האקורדים עדיין מגיעים מקובץ ה-JSON שנבחר או מברירת המחדל";
 
   if (audioFileName) {
     audioFileName.textContent = `נטען כרגע: ${file.name}`;
@@ -400,7 +400,7 @@ async function loadSelectedLyricsFile(file) {
 
 async function loadChords() {
   try {
-    const response = await fetch(`song2_chords_madmom_only.json?v=${Date.now()}`, { cache: "no-store" });
+    const response = await fetch(`data/chords/song2_chords_madmom_only.json?v=${Date.now()}`, { cache: "no-store" });
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}`);
     }
@@ -410,14 +410,14 @@ async function loadChords() {
     setActiveChord(0);
   } catch (error) {
     currentChord.textContent = "!";
-    currentRange.textContent = "לא הצלחתי לטעון song2_chords_madmom_only.json";
+    currentRange.textContent = "לא הצלחתי לטעון data/chords/song2_chords_madmom_only.json";
     chordCount.textContent = error.message;
   }
 }
 
 async function loadLyrics() {
   try {
-    const response = await fetch(`lyrics.json?v=${Date.now()}`, { cache: "no-store" });
+    const response = await fetch(`data/lyrics/lyrics.json?v=${Date.now()}`, { cache: "no-store" });
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}`);
     }
@@ -427,7 +427,7 @@ async function loadLyrics() {
     renderLyricLine(0, 0);
   } catch (error) {
     if (lyricsStatus) {
-      lyricsStatus.textContent = `לא הצלחתי לטעון lyrics.json: ${error.message}`;
+      lyricsStatus.textContent = `לא הצלחתי לטעון data/lyrics/lyrics.json: ${error.message}`;
     }
   }
 }
