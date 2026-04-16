@@ -24,21 +24,13 @@
         <div class="hero-copy">
           <video class="hero-video" src="media/hero-video.mp4" playsinline autoplay muted loop controls></video>
           <div class="hero-shade" aria-hidden="true"></div>
-          <p class="eyebrow">אקורדים, מילים, וזמן אחד שמחזיק הכל</p>
-          <h1>זורקים שיר פנימה, מקבלים ציר אקורדים שאפשר לעבוד איתו.</h1>
+          <p class="eyebrow">אתר למציאת אקורדים</p>
+          <h1>אהלן חברים יקרים! יצאתי לחפש את הדרך הכי טובה למצוא אקורדים עם מחשב(חוץ משירים של מתי כספי) מוזמנים להצטרף לחיפושים!</h1>
           <p class="hero-text">
-            בוחרים קובץ שמע, מצרפים JSON של אקורדים או מייצרים אחד בסקריפט, ומתחילים לראות איפה כל אקורד חי בתוך השיר.
+            כרגע האקורדים נוצרים מתוך קובץ Mp3 אבל בהמשך זה יהיה דרך לינק ליוטיוב
           </p>
-          <div class="hero-upload">
-            <label class="file-picker hero-picker">
-              <span>בחר קובץ שמע</span>
-              <input id="audioFile" type="file" accept="audio/*">
-            </label>
-            <p id="audioFileName" class="file-name">נטען כרגע: song.mp3</p>
-          </div>
           <div class="hero-actions">
             <a class="primary-link" href="#workspace">תגיעו לתכל׳ס</a>
-            <a class="secondary-link" href="#flow">איך זה בנוי?</a>
           </div>
         </div>
       </section>
@@ -53,6 +45,10 @@
               <p id="currentRange">לחץ Play כדי להתחיל</p>
 
               <div class="upload-row">
+                <label class="file-picker hero-picker">
+                  <span>בחר קובץ שמע</span>
+                  <input id="audioFile" type="file" accept="audio/*">
+                </label>
                 <label class="file-picker secondary-picker">
                   <span>בחר קובץ אקורדים JSON</span>
                   <input id="chordsFile" type="file" accept="application/json,.json">
@@ -64,6 +60,7 @@
                 <input id="beatsPerChord" type="number" min="1" max="16" step="1" value="4">
               </label>
 
+              <p id="audioFileName" class="file-name">נטען כרגע: song.mp3</p>
               <audio id="audio" controls preload="metadata" src="song.mp3"></audio>
 
               <div class="time-row">
@@ -77,8 +74,8 @@
           </section>
 
           <aside class="workspace-notes" aria-label="מה עושים כאן">
-            <h2>לא צריך לנחש איפה האקורד נופל.</h2>
-            <p>הציר למטה מתעדכן עם הנגן, אפשר לקפוץ לכל אקורד, להחליף קובץ JSON, ולהשוות בין detectorים בלי להחליף את כל האתר.</p>
+            <h2>איזה באסה שלא מוצאים אקורדים, אה?</h2>
+            <p>פשוט תעלו את השיר תקבלו אקורדים ותתחילו לנגן!</p>
             <div class="note-list">
               <span>שמע מקומי</span>
               <span>JSON ידני</span>
@@ -92,7 +89,7 @@
         <div class="section-heading">
           <div>
             <div class="section-kicker">ציר האקורדים</div>
-            <h2>כל חילוף מקבל מקום לנשום.</h2>
+            <h2>אתם אלופים</h2>
           </div>
           <p id="chordCount">טוען אקורדים...</p>
         </div>
@@ -103,7 +100,7 @@
         <div class="section-heading">
           <div>
             <div class="section-kicker">מילים</div>
-            <h2>כשהשורה נכנסת, האקורד כבר מחכה לה.</h2>
+            <h2>כאן בוחרים קובץ מילים ואז הוא מתחבר עם האקורדים הפלא ופלא!</h2>
           </div>
           <p id="lyricsStatus">טוען מילים...</p>
         </div>
@@ -127,7 +124,7 @@
 
       <section id="flow" class="flow-section" aria-label="איך זה עובד">
         <div class="section-kicker">איך זה עובד</div>
-        <h2>המערכת בנויה כמו תחנת עבודה קטנה.</h2>
+        <h2>שלושה צעדים פשוטים</h2>
         <div class="flow-grid">
           <article>
             <span>1</span>
@@ -137,17 +134,17 @@
           <article>
             <span>2</span>
             <h3>מטעינים אקורדים</h3>
-            <p>בוחרים JSON שנוצר מ־madmom, detector pro, או כל סקריפט אחר שנוציא ממנו את אותו פורמט.</p>
+            <p>בוחרים json שנוצר לקובץ השמע שלכם (אפשר גם לנסות כמה סוגים של אלגוריתמים) </p>
           </article>
           <article>
             <span>3</span>
             <h3>מחברים מילים</h3>
-            <p>טוענים קובץ מילים מתוזמן, או מתחילים מקובץ מיושר אוטומטית ומשפרים אותו.</p>
+            <p>טוענים קובץ מילים של השיר שיתחבר לאקורדים</p>
           </article>
         </div>
       </section>
     </main>
 
-    <script src="app.js?v=hero-autoplay-1"></script>
+    <script src="app.js?v=top-reset-1"></script>
   </body>
 </html>

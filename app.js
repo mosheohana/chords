@@ -22,6 +22,17 @@ let activeIndex = -1;
 let activeLyricIndex = -1;
 let selectedAudioUrl = null;
 
+if ("scrollRestoration" in history) {
+  history.scrollRestoration = "manual";
+}
+
+window.addEventListener("load", () => {
+  if (window.location.hash) {
+    history.replaceState(null, "", window.location.pathname + window.location.search);
+  }
+  window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+});
+
 function formatTime(seconds) {
   if (!Number.isFinite(seconds)) {
     return "0:00";
