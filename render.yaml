@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: chordlab-api
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python server.py $PORT
+    healthCheckPath: /api/health

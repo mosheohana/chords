@@ -1,0 +1,14 @@
+# ChordLab backend dependencies
+# Install with: pip install -r requirements.txt
+
+# Audio loading & analysis
+librosa==0.10.2
+soundfile==0.12.1
+numpy==1.26.4
+
+# Chord detectors
+madmom==0.16.1
+basic-pitch==0.3.2
+
+# Utilities
+scipy==1.13.1

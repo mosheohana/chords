@@ -1,3 +1,10 @@
+// ─── Backend URL ────────────────────────────────────────────────────────────
+// After deploying to Render, paste your service URL here (no trailing slash).
+// Example: "https://chordlab-api.onrender.com"
+// Leave empty to use a relative path (works when running server.py locally).
+const BACKEND_URL = "";
+// ────────────────────────────────────────────────────────────────────────────
+
 const audio = document.querySelector("#audio");
 const currentChord = document.querySelector("#currentChord");
 const currentRange = document.querySelector("#currentRange");
@@ -9,6 +16,7 @@ const chordsFile = document.querySelector("#chordsFile");
 const lyricsFile = document.querySelector("#lyricsFile");
 const audioFileName = document.querySelector("#audioFileName");
 const beatsPerChordInput = document.querySelector("#beatsPerChord");
+const detectorSelect = document.querySelector("#detectorSelect");
 const timeline = document.querySelector("#timeline");
 const chordCount = document.querySelector("#chordCount");
 const upNext = document.querySelector("#upNext");
@@ -279,17 +287,21 @@ async function analyzeSelectedAudio(file) {
     return;
   }
 
+  const detector = detectorSelect?.value || "madmom";
   const formData = new FormData();
   formData.append("audio", file);
   formData.append("beatsPerChord", beatsPerChordInput?.value || "4");
+  formData.append("detector", detector);
+
+  const detectorLabel = detectorSelect?.options[detectorSelect.selectedIndex]?.text || detector;
 
   if (audioFileName) {
     audioFileName.textContent = `מנתח אקורדים עבור: ${file.name}`;
   }
-  currentRange.textContent = "מעלה קובץ ומחשב אקורדים...";
+  currentRange.textContent = `מעלה קובץ ומחשב אקורדים (${detectorLabel})...`;
 
   try {
-    const response = await fetch("/api/analyze-audio", {
+    const response = await fetch(`${BACKEND_URL}/api/analyze-audio`, {
       method: "POST",
       body: formData,
     });
@@ -312,10 +324,11 @@ async function analyzeSelectedAudio(file) {
     duration.textContent = "0:00";
     progressFill.style.width = "0%";
 
+    const tempoText = result.tempo ? ` · ${Math.round(result.tempo)} BPM` : "";
     if (audioFileName) {
-      audioFileName.textContent = `נטען ונותח: ${file.name} (${Math.round(result.tempo)} BPM)`;
+      audioFileName.textContent = `נטען ונותח: ${file.name}${tempoText}`;
     }
-    currentRange.textContent = `נוצרו ${result.chords.length} מקטעי אקורדים`;
+    currentRange.textContent = `נוצרו ${result.chords.length} מקטעי אקורדים (${detectorLabel})`;
   } catch (error) {
     loadSelectedAudioPreview(file);
     if (audioFileName) {

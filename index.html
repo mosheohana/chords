@@ -66,6 +66,16 @@
                 <input id="beatsPerChord" type="number" min="1" max="16" step="1" value="4">
               </label>
 
+              <label class="beat-control">
+                <span>אלגוריתם זיהוי</span>
+                <select id="detectorSelect">
+                  <option value="madmom">Madmom – מדויק (מומלץ)</option>
+                  <option value="pro">Pro – היברידי (הכי מדויק, איטי)</option>
+                  <option value="basic">Basic – מהיר</option>
+                  <option value="bp">Basic Pitch – מבוסס תווים</option>
+                </select>
+              </label>
+
               <p id="audioFileName" class="file-name">נטען כרגע: song2.mp3</p>
               <audio id="audio" controls preload="metadata" src="media/audio/song2.mp3"></audio>
 
