@@ -81,7 +81,7 @@ class ChordRequestHandler(SimpleHTTPRequestHandler):
 
     def do_GET(self):
         if self.path.split("?")[0] == "/api/health":
-            self.send_json({"status": "ok"})
+            self.send_json({"status": "ok", "version": "cors-v3"})
             return
         super().do_GET()
 
