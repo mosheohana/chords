@@ -2,7 +2,7 @@
 // After deploying to Render, paste your service URL here (no trailing slash).
 // Example: "https://chordlab-api.onrender.com"
 // Leave empty to use a relative path (works when running server.py locally).
-const BACKEND_URL = "";
+const BACKEND_URL = "https://chords-lnp2.onrender.com";
 // ────────────────────────────────────────────────────────────────────────────
 
 const audio = document.querySelector("#audio");
