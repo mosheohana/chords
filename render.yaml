@@ -3,6 +3,6 @@ services:
     name: chordlab-api
     env: python
     plan: free
-    buildCommand: pip install Cython==3.0.11 numpy==1.26.4 && pip install -r requirements.txt
+    buildCommand: pip install Cython==3.0.11 numpy==1.26.4 && pip install --no-build-isolation madmom==0.16.1 && pip install -r requirements.txt
     startCommand: python server.py $PORT
     healthCheckPath: /api/health
