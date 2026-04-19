@@ -55,25 +55,20 @@
                   <span>בחר קובץ שמע</span>
                   <input id="audioFile" type="file" accept="audio/*">
                 </label>
-                <label class="file-picker secondary-picker">
-                  <span>בחר קובץ אקורדים JSON</span>
-                  <input id="chordsFile" type="file" accept="application/json,.json">
+                <label class="beat-control secondary-picker">
+                  <span>אלגוריתם זיהוי</span>
+                  <select id="detectorSelect">
+                    <option value="madmom">Madmom – מדויק (מומלץ)</option>
+                    <option value="pro">Pro – הכי מדויק, איטי</option>
+                    <option value="basic">Basic – מהיר</option>
+                    <option value="bp">Basic Pitch – מבוסס תווים</option>
+                  </select>
                 </label>
               </div>
 
               <label class="beat-control">
                 <span>ביטים לאקורד</span>
                 <input id="beatsPerChord" type="number" min="1" max="16" step="1" value="4">
-              </label>
-
-              <label class="beat-control">
-                <span>אלגוריתם זיהוי</span>
-                <select id="detectorSelect">
-                  <option value="madmom">Madmom – מדויק (מומלץ)</option>
-                  <option value="pro">Pro – היברידי (הכי מדויק, איטי)</option>
-                  <option value="basic">Basic – מהיר</option>
-                  <option value="bp">Basic Pitch – מבוסס תווים</option>
-                </select>
               </label>
 
               <p id="audioFileName" class="file-name">נטען כרגע: song2.mp3</p>
@@ -93,8 +88,8 @@
             <h2>איזה באסה שלא מוצאים אקורדים, אה?</h2>
             <p>פשוט תעלו את השיר תקבלו אקורדים ותתחילו לנגן!</p>
             <div class="note-list">
-              <span>שמע מקומי</span>
-              <span>JSON ידני</span>
+              <span>העלאת שמע</span>
+              <span>זיהוי אוטומטי</span>
               <span>מילים מסונכרנות</span>
             </div>
           </aside>
@@ -149,8 +144,8 @@
           </article>
           <article>
             <span>2</span>
-            <h3>מטעינים אקורדים</h3>
-            <p>בוחרים json שנוצר לקובץ השמע שלכם (אפשר גם לנסות כמה סוגים של אלגוריתמים) </p>
+            <h3>בוחרים אלגוריתם</h3>
+            <p>בוחרים איזה אלגוריתם לנתח את השיר — Madmom מדויק, Basic מהיר, ועוד.</p>
           </article>
           <article>
             <span>3</span>

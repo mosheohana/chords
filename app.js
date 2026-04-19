@@ -12,7 +12,6 @@ const elapsed = document.querySelector("#elapsed");
 const duration = document.querySelector("#duration");
 const progressFill = document.querySelector("#progressFill");
 const audioFile = document.querySelector("#audioFile");
-const chordsFile = document.querySelector("#chordsFile");
 const lyricsFile = document.querySelector("#lyricsFile");
 const audioFileName = document.querySelector("#audioFileName");
 const beatsPerChordInput = document.querySelector("#beatsPerChord");
@@ -451,9 +450,6 @@ audio.addEventListener("play", updatePlaybackUi);
 audio.addEventListener("seeked", updatePlaybackUi);
 audioFile?.addEventListener("change", (event) => {
   analyzeSelectedAudio(event.target.files?.[0]);
-});
-chordsFile?.addEventListener("change", (event) => {
-  loadSelectedChordsFile(event.target.files?.[0]);
 });
 lyricsFile?.addEventListener("change", (event) => {
   loadSelectedLyricsFile(event.target.files?.[0]);
