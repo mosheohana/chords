@@ -309,7 +309,15 @@ async function analyzeSelectedAudio(file) {
     const uploadData = await uploadRes.json();
     if (!uploadRes.ok) throw new Error(uploadData.error || `HTTP ${uploadRes.status}`);
 
+    if (Array.isArray(uploadData.chords)) {
+      applyAnalysisResult(uploadData, file, detectorLabel);
+      return;
+    }
+
     const jobId = uploadData.jobId;
+    if (!jobId) {
+      throw new Error("השרת לא החזיר מזהה משימה");
+    }
     if (audioFileName) {
       audioFileName.textContent = `מנתח: ${file.name} (${detectorLabel})`;
     }
@@ -340,24 +348,7 @@ async function analyzeSelectedAudio(file) {
     });
 
     // 3. Load results
-    if (selectedAudioUrl) {
-      URL.revokeObjectURL(selectedAudioUrl);
-      selectedAudioUrl = null;
-    }
-
-    audio.pause();
-    audio.src = `${BACKEND_URL}${result.audioUrl}`;
-    audio.load();
-    setChords(result.chords);
-    elapsed.textContent = "0:00";
-    duration.textContent = "0:00";
-    progressFill.style.width = "0%";
-
-    const tempoText = result.tempo ? ` · ${Math.round(result.tempo)} BPM` : "";
-    if (audioFileName) {
-      audioFileName.textContent = `נותח: ${file.name}${tempoText}`;
-    }
-    currentRange.textContent = `נוצרו ${result.chords.length} מקטעי אקורדים (${detectorLabel})`;
+    applyAnalysisResult(result, file, detectorLabel);
 
   } catch (error) {
     loadSelectedAudioPreview(file);
@@ -366,6 +357,43 @@ async function analyzeSelectedAudio(file) {
     }
     currentRange.textContent = `השרת לא ניתח את הקובץ: ${error.message}`;
   }
+}
+
+function applyAnalysisResult(result, file, detectorLabel) {
+  if (!Array.isArray(result.chords)) {
+    throw new Error("השרת החזיר תוצאה בלי אקורדים");
+  }
+
+  if (selectedAudioUrl) {
+    URL.revokeObjectURL(selectedAudioUrl);
+    selectedAudioUrl = null;
+  }
+
+  audio.pause();
+  audio.src = absoluteBackendUrl(result.audioUrl);
+  audio.load();
+  setChords(result.chords);
+  elapsed.textContent = "0:00";
+  duration.textContent = "0:00";
+  progressFill.style.width = "0%";
+
+  const tempoText = result.tempo ? ` · ${Math.round(result.tempo)} BPM` : "";
+  if (audioFileName) {
+    audioFileName.textContent = `נותח: ${file.name}${tempoText}`;
+  }
+  currentRange.textContent = `נוצרו ${result.chords.length} מקטעי אקורדים (${detectorLabel})`;
+}
+
+function absoluteBackendUrl(path) {
+  if (!path) {
+    return "";
+  }
+
+  if (/^https?:\/\//i.test(path) || path.startsWith("blob:")) {
+    return path;
+  }
+
+  return `${BACKEND_URL}${path.startsWith("/") ? "" : "/"}${path}`;
 }
 
 function validateChordRows(rows) {
