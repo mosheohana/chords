@@ -26,6 +26,9 @@ const lyricsLine = document.querySelector("#lyricsLine");
 const lyricsStatus = document.querySelector("#lyricsStatus");
 const reanalyzeBtn = document.querySelector("#reanalyzeBtn");
 const analysisAnimation = document.querySelector("#analysisAnimation");
+const heroVideo = document.querySelector("#heroVideo");
+const heroVideoPlay = document.querySelector("#heroVideoPlay");
+const heroVideoMute = document.querySelector("#heroVideoMute");
 
 let chords = [];
 let lyrics = [];
@@ -63,6 +66,43 @@ window.addEventListener("pointermove", (event) => {
     ambientFrame = requestAnimationFrame(updateAmbientLight);
   }
 });
+
+function updateHeroVideoControls() {
+  if (heroVideoPlay && heroVideo) {
+    heroVideoPlay.textContent = heroVideo.paused ? "Play video" : "Pause video";
+  }
+  if (heroVideoMute && heroVideo) {
+    heroVideoMute.textContent = heroVideo.muted ? "Sound on" : "Sound off";
+  }
+}
+
+heroVideoPlay?.addEventListener("click", () => {
+  if (!heroVideo) {
+    return;
+  }
+
+  if (heroVideo.paused) {
+    heroVideo.play().catch(() => {
+      updateHeroVideoControls();
+    });
+  } else {
+    heroVideo.pause();
+  }
+  updateHeroVideoControls();
+});
+
+heroVideoMute?.addEventListener("click", () => {
+  if (!heroVideo) {
+    return;
+  }
+
+  heroVideo.muted = !heroVideo.muted;
+  updateHeroVideoControls();
+});
+
+heroVideo?.addEventListener("play", updateHeroVideoControls);
+heroVideo?.addEventListener("pause", updateHeroVideoControls);
+updateHeroVideoControls();
 
 function formatTime(seconds) {
   if (!Number.isFinite(seconds)) {
