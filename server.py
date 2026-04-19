@@ -99,7 +99,7 @@ class ChordRequestHandler(SimpleHTTPRequestHandler):
         )
 
         file_item = form["audio"] if "audio" in form else None
-        if not file_item or not getattr(file_item, "filename", ""):
+        if file_item is None or not getattr(file_item, "filename", ""):
             self.send_json({"error": "Missing audio file"}, status=400)
             return
 
