@@ -29,9 +29,10 @@ body {
   margin: 0;
   min-height: 100vh;
   background:
-    radial-gradient(circle at 18% 10%, rgba(244, 241, 232, 0.065), transparent 24rem),
-    radial-gradient(circle at 84% 22%, rgba(242, 184, 75, 0.12), transparent 28rem),
-    linear-gradient(180deg, rgba(242, 184, 75, 0.08), transparent 420px),
+    radial-gradient(circle at 18% 10%, rgba(244, 241, 232, 0.12), transparent 28rem),
+    radial-gradient(circle at 84% 22%, rgba(242, 184, 75, 0.2), transparent 34rem),
+    radial-gradient(circle at 50% 92%, rgba(242, 184, 75, 0.1), transparent 30rem),
+    linear-gradient(180deg, rgba(242, 184, 75, 0.12), transparent 460px),
     var(--bg);
   color: var(--text);
   font-family: "Rubik", Arial, "Noto Sans Hebrew", sans-serif;
@@ -50,23 +51,24 @@ body::before {
   background:
     radial-gradient(
       circle at var(--cursor-x) var(--cursor-y),
-      rgba(242, 184, 75, 0.16),
-      rgba(242, 184, 75, 0.055) 12rem,
-      transparent 30rem
+      rgba(242, 184, 75, 0.28),
+      rgba(242, 184, 75, 0.095) 13rem,
+      transparent 34rem
     ),
-    radial-gradient(circle at 46% 86%, rgba(244, 241, 232, 0.045), transparent 22rem);
+    radial-gradient(circle at 46% 86%, rgba(244, 241, 232, 0.075), transparent 26rem);
   opacity: 0.95;
   transition: opacity 180ms ease;
 }
 
 body::after {
   background-image:
-    linear-gradient(rgba(244, 241, 232, 0.028) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(244, 241, 232, 0.022) 1px, transparent 1px);
-  background-size: 72px 72px, 72px 72px;
+    linear-gradient(rgba(244, 241, 232, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(244, 241, 232, 0.032) 1px, transparent 1px),
+    radial-gradient(circle at center, rgba(242, 184, 75, 0.09), transparent 1px);
+  background-size: 72px 72px, 72px 72px, 24px 24px;
   -webkit-mask-image: linear-gradient(180deg, transparent, #000 18%, #000 72%, transparent);
   mask-image: linear-gradient(180deg, transparent, #000 18%, #000 72%, transparent);
-  opacity: 0.55;
+  opacity: 0.72;
 }
 
 body::selection {
@@ -284,10 +286,10 @@ h3 {
 
 .studio-workspace-grid {
   display: grid;
-  grid-template-columns: minmax(220px, 0.82fr) minmax(0, 1.42fr) minmax(260px, 0.95fr);
+  grid-template-columns: minmax(240px, 0.72fr) minmax(0, 1.48fr);
   grid-template-areas:
-    "controls monitor lyrics"
-    "timeline timeline timeline";
+    "controls monitor"
+    "timeline timeline";
   gap: 16px;
   align-items: stretch;
 }
@@ -438,11 +440,11 @@ h3 {
 
 .main-chord-display {
   grid-area: monitor;
-  display: flex;
+  display: grid;
   min-width: 0;
   min-height: 430px;
-  flex-direction: column;
-  justify-content: center;
+  grid-template-columns: minmax(160px, 0.42fr) minmax(0, 1fr);
+  align-items: center;
   padding: 28px;
   background:
     linear-gradient(180deg, rgba(242, 184, 75, 0.08), transparent 56%),
@@ -450,6 +452,26 @@ h3 {
   box-shadow:
     inset 0 0 0 1px rgba(255, 255, 255, 0.035),
     0 26px 80px rgba(0, 0, 0, 0.46);
+}
+
+.player-visual {
+  width: 100%;
+  max-width: 260px;
+  aspect-ratio: 1;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--accent-line);
+  border-radius: 8px;
+  background: var(--accent-soft);
+  box-shadow: 0 0 38px rgba(242, 184, 75, 0.14);
+}
+
+.player-visual img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  filter: saturate(0.84) contrast(1.08) brightness(0.9);
 }
 
 .main-chord-display.is-analyzing {
@@ -461,6 +483,7 @@ h3 {
 }
 
 .main-chord-display h2 {
+  grid-column: 2;
   margin: 0 0 12px;
   color: var(--text);
   font-size: 7rem;
@@ -470,7 +493,12 @@ h3 {
   text-shadow: 0 0 34px rgba(242, 184, 75, 0.2);
 }
 
+.main-chord-display > .eyebrow {
+  grid-column: 2;
+}
+
 #currentRange {
+  grid-column: 2;
   min-height: 1.4em;
   margin-bottom: 26px;
   color: var(--muted);
@@ -478,6 +506,7 @@ h3 {
 }
 
 .analysis-animation {
+  grid-column: 2;
   width: min(360px, 100%);
   margin: 4px 0 26px;
   padding: 18px;
@@ -605,12 +634,14 @@ h3 {
 }
 
 audio {
+  grid-column: 1 / -1;
   width: 100%;
   margin-bottom: 18px;
   accent-color: var(--accent);
 }
 
 .time-row {
+  grid-column: 1 / -1;
   display: grid;
   grid-template-columns: 54px 1fr 54px;
   gap: 10px;
@@ -1000,7 +1031,7 @@ audio {
 
 @media (max-width: 1120px) {
   .studio-workspace-grid {
-    grid-template-columns: minmax(210px, 0.78fr) minmax(0, 1.22fr) minmax(230px, 0.9fr);
+    grid-template-columns: minmax(220px, 0.72fr) minmax(0, 1.28fr);
   }
 
   .main-chord-display {
@@ -1017,7 +1048,7 @@ audio {
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
       "monitor monitor"
-      "controls lyrics"
+      "controls controls"
       "timeline timeline";
   }
 
@@ -1027,10 +1058,6 @@ audio {
 
   .main-chord-display h2 {
     font-size: 5.5rem;
-  }
-
-  .lyrics-panel {
-    min-height: 340px;
   }
 
   .control-panel {
@@ -1093,7 +1120,6 @@ audio {
     grid-template-areas:
       "monitor"
       "controls"
-      "lyrics"
       "timeline";
   }
 
@@ -1102,7 +1128,6 @@ audio {
   }
 
   .main-chord-display,
-  .lyrics-panel,
   .timeline-panel,
   .next-section,
   .flow-section {
@@ -1110,11 +1135,27 @@ audio {
   }
 
   .main-chord-display {
+    grid-template-columns: 1fr;
     min-height: 300px;
   }
 
+  .player-visual {
+    max-width: 190px;
+    margin-bottom: 18px;
+  }
+
+  #currentRange,
+  .analysis-animation {
+    grid-column: 1;
+  }
+
   .main-chord-display h2 {
+    grid-column: 1;
     font-size: 4.2rem;
+  }
+
+  .main-chord-display > .eyebrow {
+    grid-column: 1;
   }
 
   .lyrics-line {

@@ -16,7 +16,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=footer-github-1">
+    <link rel="stylesheet" href="style.css?v=studio-live-bg-2">
   </head>
   <body>
     <div class="studio-layout">
@@ -26,7 +26,6 @@
           <a href="#workspace">Studio</a>
           <a href="algorithms.html">Algorithms</a>
           <a href="#flow">How it works</a>
-          <a href="#lyrics">Lyrics</a>
         </nav>
       </header>
 
@@ -76,6 +75,12 @@
             </aside>
 
             <section class="main-chord-display now-panel" aria-labelledby="currentChordLabel">
+              <figure class="player-visual" aria-label="Modern studio player">
+                <img
+                  src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=900&q=80"
+                  alt="Modern studio headphones and music gear"
+                >
+              </figure>
               <p id="currentChordLabel" class="eyebrow">Now playing</p>
               <h2 id="currentChord">--</h2>
               <p id="currentRange">Press Play to start</p>
@@ -111,21 +116,6 @@
               </div>
             </section>
 
-            <aside id="lyrics" class="lyrics-panel lyrics-section" aria-labelledby="lyricsTitle">
-              <div class="section-heading">
-                <div>
-                  <div class="section-kicker">Lyrics</div>
-                  <h2 id="lyricsTitle">Lyrics</h2>
-                </div>
-                <p id="lyricsStatus">Loading lyrics...</p>
-              </div>
-              <label class="file-picker lyrics-picker">
-                <span>Choose lyrics JSON</span>
-                <input id="lyricsFile" type="file" accept="application/json,.json">
-              </label>
-              <div id="lyricsLine" class="lyrics-line"></div>
-            </aside>
-
             <section class="timeline-panel timeline-section" aria-labelledby="timelineTitle">
               <div class="section-heading">
                 <div>
@@ -138,6 +128,12 @@
             </section>
           </div>
         </section>
+
+        <div class="deferred-lyrics" hidden>
+          <p id="lyricsStatus"></p>
+          <input id="lyricsFile" type="file" accept="application/json,.json">
+          <div id="lyricsLine"></div>
+        </div>
 
         <section class="next-section" aria-label="Upcoming chords">
           <div class="section-heading">
