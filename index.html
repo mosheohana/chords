@@ -19,61 +19,66 @@
     <link rel="stylesheet" href="style.css?v=footer-github-1">
   </head>
   <body>
-    <header class="site-header">
-      <a class="brand" href="#top">ChordLab</a>
-      <nav aria-label="ניווט ראשי">
-        <a href="#workspace">התכל׳ס</a>
-        <a href="#flow">איך זה עובד</a>
-        <a href="#lyrics">מילים</a>
-      </nav>
-    </header>
+    <div class="studio-layout">
+      <header class="top-bar site-header">
+        <a class="brand" href="#top">ChordLab</a>
+        <nav aria-label="Main navigation">
+          <a href="#workspace">Studio</a>
+          <a href="#flow">How it works</a>
+          <a href="#lyrics">Lyrics</a>
+        </nav>
+      </header>
 
-    <main id="top">
-      <section class="hero">
-        <div class="hero-copy">
-          <video class="hero-video" src="media/hero-video.mp4" playsinline autoplay muted loop controls></video>
-          <div class="hero-shade" aria-hidden="true"></div>
-          <p class="eyebrow">אתר למציאת אקורדים</p>
-          <h1>אהלן חברים יקרים! יצאתי לחפש את הדרך הכי טובה למצוא אקורדים עם מחשב(חוץ משירים של מתי כספי) מוזמנים להצטרף לחיפושים!</h1>
-          <p class="hero-text">
-            כרגע האקורדים נוצרים מתוך קובץ Mp3 אבל בהמשך זה יהיה דרך לינק ליוטיוב
-          </p>
-        </div>
-      </section>
+      <main id="top">
+        <section class="hero studio-hero" aria-labelledby="heroTitle">
+          <div class="hero-copy">
+            <video class="hero-video" src="media/hero-video.mp4" playsinline autoplay muted loop controls></video>
+            <div class="hero-shade" aria-hidden="true"></div>
+            <p class="eyebrow">Home music studio</p>
+            <h1 id="heroTitle">Find the chords inside your track.</h1>
+            <p class="hero-text">Upload audio, choose a detector, and follow the song from the main monitor.</p>
+            <a class="primary-link" href="#workspace">Start analyzing</a>
+          </div>
+        </section>
 
-      <section id="workspace" class="workspace">
-        <div class="section-kicker">התכל׳ס</div>
-        <div class="workspace-grid">
-          <section class="control-surface" aria-label="נגן וקבצים">
-            <div class="now-panel">
-              <p class="eyebrow">האקורד שמנוגן עכשיו</p>
-              <h2 id="currentChord">--</h2>
-              <p id="currentRange">לחץ Play כדי להתחיל</p>
-
-              <div class="upload-row">
+        <section id="workspace" class="workspace studio-workspace" aria-label="Chord analysis studio">
+          <div class="section-kicker">Studio</div>
+          <div class="workspace-grid studio-workspace-grid">
+            <aside class="control-panel" aria-label="Studio controls">
+              <section class="upload-card" aria-labelledby="uploadTitle">
+                <h2 id="uploadTitle">Audio</h2>
                 <label class="file-picker hero-picker">
-                  <span>בחר קובץ שמע</span>
+                  <span>Choose audio file</span>
                   <input id="audioFile" type="file" accept="audio/*">
                 </label>
+                <p id="audioFileName" class="file-name">Loaded: song2.mp3</p>
+                <button id="reanalyzeBtn" class="reanalyze-btn" type="button" hidden>Analyze again</button>
+              </section>
+
+              <section class="algorithm-selector" aria-labelledby="algorithmTitle">
+                <h2 id="algorithmTitle">Detector</h2>
                 <label class="file-picker secondary-picker">
-                  <span>אלגוריתם זיהוי</span>
+                  <span>Algorithm</span>
                   <select id="detectorSelect">
-                    <option value="madmom">Madmom – מדויק, איטי</option>
-                    <option value="pro">Pro – הכי מדויק, איטי</option>
-                    <option value="basic" selected>Basic – מהיר (מומלץ)</option>
-                    <option value="bp">Basic Pitch – מבוסס תווים</option>
+                    <option value="madmom">Madmom - accurate, slow</option>
+                    <option value="pro">Pro - most accurate, slow</option>
+                    <option value="basic" selected>Basic - fast (recommended)</option>
+                    <option value="bp">Basic Pitch - note based</option>
                   </select>
                 </label>
-              </div>
 
-              <label class="beat-control">
-                <span>ביטים לאקורד</span>
-                <input id="beatsPerChord" type="number" min="1" max="16" step="1" value="4">
-              </label>
+                <label class="beat-control">
+                  <span>Beats per chord</span>
+                  <input id="beatsPerChord" type="number" min="1" max="16" step="1" value="4">
+                </label>
+              </section>
+            </aside>
 
-              <button id="reanalyzeBtn" class="reanalyze-btn" type="button" hidden>נתח מחדש</button>
+            <section class="main-chord-display now-panel" aria-labelledby="currentChordLabel">
+              <p id="currentChordLabel" class="eyebrow">Now playing</p>
+              <h2 id="currentChord">--</h2>
+              <p id="currentRange">Press Play to start</p>
 
-              <p id="audioFileName" class="file-name">נטען כרגע: song2.mp3</p>
               <audio id="audio" controls preload="metadata" src="media/audio/song2.mp3"></audio>
 
               <div class="time-row">
@@ -83,80 +88,70 @@
                 </div>
                 <span id="duration">0:00</span>
               </div>
+            </section>
+
+            <aside id="lyrics" class="lyrics-panel lyrics-section" aria-labelledby="lyricsTitle">
+              <div class="section-heading">
+                <div>
+                  <div class="section-kicker">Lyrics</div>
+                  <h2 id="lyricsTitle">Lyrics</h2>
+                </div>
+                <p id="lyricsStatus">Loading lyrics...</p>
+              </div>
+              <label class="file-picker lyrics-picker">
+                <span>Choose lyrics JSON</span>
+                <input id="lyricsFile" type="file" accept="application/json,.json">
+              </label>
+              <div id="lyricsLine" class="lyrics-line"></div>
+            </aside>
+
+            <section class="timeline-panel timeline-section" aria-labelledby="timelineTitle">
+              <div class="section-heading">
+                <div>
+                  <div class="section-kicker">Timeline</div>
+                  <h2 id="timelineTitle">Chord track</h2>
+                </div>
+                <p id="chordCount">Loading chords...</p>
+              </div>
+              <div id="timeline" class="timeline"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="next-section" aria-label="Upcoming chords">
+          <div class="section-heading">
+            <div>
+              <div class="section-kicker">Next</div>
+              <h2>Up next</h2>
             </div>
-          </section>
-
-          <aside class="workspace-notes" aria-label="מה עושים כאן">
-            <h2>איזה באסה שלא מוצאים אקורדים, אה?</h2>
-            <p>פשוט תעלו את השיר תקבלו אקורדים ותתחילו לנגן!</p>
-            <div class="note-list">
-              <span>העלאת שמע</span>
-              <span>זיהוי אוטומטי</span>
-              <span>מילים מסונכרנות</span>
-            </div>
-          </aside>
-        </div>
-      </section>
-
-      <section class="timeline-section" aria-label="ציר זמן">
-        <div class="section-heading">
-          <div>
-            <div class="section-kicker">ציר האקורדים</div>
-            <h2>אתם אלופים</h2>
+            <p id="nextLabel">Upcoming chords appear here during playback.</p>
           </div>
-          <p id="chordCount">טוען אקורדים...</p>
-        </div>
-        <div id="timeline" class="timeline"></div>
-      </section>
+          <div id="upNext" class="up-next"></div>
+        </section>
 
-      <section id="lyrics" class="lyrics-section" aria-label="מילים מסונכרנות">
-        <div class="section-heading">
-          <div>
-            <div class="section-kicker">מילים</div>
-            <h2>כאן בוחרים קובץ מילים ואז הוא מתחבר עם האקורדים הפלא ופלא!</h2>
+        <section id="flow" class="how-it-works flow-section" aria-label="How it works">
+          <div class="section-kicker">How it works</div>
+          <h2>Three simple moves</h2>
+          <div class="flow-grid">
+            <article>
+              <span>1</span>
+              <h3>Load audio</h3>
+              <p>Choose a track from your computer or use the sample song.</p>
+            </article>
+            <article>
+              <span>2</span>
+              <h3>Pick a detector</h3>
+              <p>Use the fast detector for quick takes or a deeper model for slower analysis.</p>
+            </article>
+            <article>
+              <span>3</span>
+              <h3>Follow the song</h3>
+              <p>Play the track, watch the chord monitor, and scan the timeline.</p>
+            </article>
           </div>
-          <p id="lyricsStatus">טוען מילים...</p>
-        </div>
-        <label class="file-picker lyrics-picker">
-          <span>בחר קובץ מילים JSON</span>
-          <input id="lyricsFile" type="file" accept="application/json,.json">
-        </label>
-        <div id="lyricsLine" class="lyrics-line"></div>
-      </section>
-
-      <section class="next-section" aria-label="האקורדים הקרובים">
-        <div class="section-heading">
-          <div>
-            <div class="section-kicker">המשך</div>
-            <h2>מה מגיע עוד רגע?</h2>
-          </div>
-          <p id="nextLabel">האקורדים הבאים יופיעו כאן בזמן הנגינה.</p>
-        </div>
-        <div id="upNext" class="up-next"></div>
-      </section>
-
-      <section id="flow" class="flow-section" aria-label="איך זה עובד">
-        <div class="section-kicker">איך זה עובד</div>
-        <h2>שלושה צעדים פשוטים</h2>
-        <div class="flow-grid">
-          <article>
-            <span>1</span>
-            <h3>מכניסים שמע</h3>
-            <p>בוחרים קובץ מהמחשב או משתמשים בשיר הדוגמה שכבר נמצא בפרויקט.</p>
-          </article>
-          <article>
-            <span>2</span>
-            <h3>בוחרים אלגוריתם</h3>
-            <p>בוחרים איזה אלגוריתם לנתח את השיר — Madmom מדויק, Basic מהיר, ועוד.</p>
-          </article>
-          <article>
-            <span>3</span>
-            <h3>מחברים מילים</h3>
-            <p>טוענים קובץ מילים של השיר שיתחבר לאקורדים</p>
-          </article>
-        </div>
-      </section>
-    </main>
+        </section>
+      </main>
+    </div>
 
     <footer class="site-footer">
       <a class="github-link" href="https://github.com/mosheohana/chords" target="_blank" rel="noreferrer">
