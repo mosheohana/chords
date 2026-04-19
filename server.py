@@ -202,11 +202,15 @@ class ChordRequestHandler(SimpleHTTPRequestHandler):
         except (TypeError, ValueError):
             return default
 
+    def end_headers(self):
+        """Inject CORS headers into every response automatically."""
+        for k, v in _cors_headers().items():
+            self.send_header(k, v)
+        super().end_headers()
+
     def send_json(self, payload, status=200):
         body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
         self.send_response(status)
-        for k, v in _cors_headers().items():
-            self.send_header(k, v)
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Content-Length", str(len(body)))
         self.end_headers()
