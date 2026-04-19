@@ -164,7 +164,6 @@ main {
 }
 
 .hero {
-  position: relative;
   width: 100vw;
   margin-inline: calc(50% - 50vw);
 }
@@ -1080,10 +1079,6 @@ audio {
 
   main#top > .hero {
     z-index: 1;
-  }
-
-  main#top > .hero .hero-video-controls {
-    transform: translate(calc(-1 * max(28px, calc((100vw - 1220px) / 2 + 28px))), -92px);
   }
 
   main#top > .workspace {
