@@ -99,14 +99,24 @@
                 </div>
               </div>
 
-              <audio id="audio" controls preload="metadata" src="media/audio/song2.mp3"></audio>
+              <audio id="audio" preload="metadata" src="media/audio/song2.mp3"></audio>
 
-              <div class="time-row">
-                <span id="elapsed">0:00</span>
-                <div class="progress-track" aria-hidden="true">
-                  <div id="progressFill"></div>
+              <div class="studio-player" aria-label="Audio player">
+                <button id="playPauseBtn" class="play-toggle" type="button" aria-label="Play">
+                  <span class="play-icon" aria-hidden="true"></span>
+                </button>
+                <div class="player-main">
+                  <div class="time-row">
+                    <span id="elapsed">0:00</span>
+                    <label class="seek-wrap" aria-label="Track progress">
+                      <input id="studioSeek" class="studio-seek" type="range" min="0" max="1000" value="0" step="1">
+                      <span class="progress-track" aria-hidden="true">
+                        <span id="progressFill"></span>
+                      </span>
+                    </label>
+                    <span id="duration">0:00</span>
+                  </div>
                 </div>
-                <span id="duration">0:00</span>
               </div>
             </section>
 

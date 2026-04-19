@@ -11,6 +11,8 @@ const currentRange = document.querySelector("#currentRange");
 const elapsed = document.querySelector("#elapsed");
 const duration = document.querySelector("#duration");
 const progressFill = document.querySelector("#progressFill");
+const playPauseBtn = document.querySelector("#playPauseBtn");
+const studioSeek = document.querySelector("#studioSeek");
 const audioFile = document.querySelector("#audioFile");
 const lyricsFile = document.querySelector("#lyricsFile");
 const audioFileName = document.querySelector("#audioFileName");
@@ -276,6 +278,14 @@ function updatePlaybackUi() {
   elapsed.textContent = formatTime(currentTime);
   duration.textContent = formatTime(audioDuration);
   progressFill.style.width = audioDuration ? `${(currentTime / audioDuration) * 100}%` : "0%";
+  if (studioSeek) {
+    studioSeek.value = audioDuration ? String(Math.round((currentTime / audioDuration) * 1000)) : "0";
+  }
+  if (playPauseBtn) {
+    const isPlaying = !audio.paused && !audio.ended;
+    playPauseBtn.classList.toggle("is-playing", isPlaying);
+    playPauseBtn.setAttribute("aria-label", isPlaying ? "Pause" : "Play");
+  }
   setActiveChord(index);
   renderLyricLine(lyricIndex, currentTime);
 }
@@ -530,7 +540,27 @@ async function loadLyrics() {
 audio.addEventListener("loadedmetadata", updatePlaybackUi);
 audio.addEventListener("timeupdate", updatePlaybackUi);
 audio.addEventListener("play", updatePlaybackUi);
+audio.addEventListener("pause", updatePlaybackUi);
+audio.addEventListener("ended", updatePlaybackUi);
 audio.addEventListener("seeked", updatePlaybackUi);
+playPauseBtn?.addEventListener("click", () => {
+  if (audio.paused || audio.ended) {
+    audio.play().catch(() => {
+      updatePlaybackUi();
+    });
+  } else {
+    audio.pause();
+  }
+});
+studioSeek?.addEventListener("input", () => {
+  const audioDuration = audio.duration || (chords.length ? chords[chords.length - 1].end : 0);
+  if (!audioDuration) {
+    return;
+  }
+
+  audio.currentTime = (Number(studioSeek.value) / 1000) * audioDuration;
+  updatePlaybackUi();
+});
 audioFile?.addEventListener("change", (event) => {
   const file = event.target.files?.[0];
   if (file) {
