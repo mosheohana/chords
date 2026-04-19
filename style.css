@@ -337,6 +337,33 @@ h3 {
   font: inherit;
 }
 
+.file-picker select {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  font: inherit;
+}
+
+.reanalyze-btn {
+  margin-top: 4px;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 8px;
+  background: var(--ink);
+  color: var(--white);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.reanalyze-btn:hover {
+  opacity: 0.8;
+}
+
 .file-name {
   margin-bottom: 14px;
   color: var(--muted);

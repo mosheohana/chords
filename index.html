@@ -55,7 +55,7 @@
                   <span>בחר קובץ שמע</span>
                   <input id="audioFile" type="file" accept="audio/*">
                 </label>
-                <label class="beat-control secondary-picker">
+                <label class="file-picker secondary-picker">
                   <span>אלגוריתם זיהוי</span>
                   <select id="detectorSelect">
                     <option value="madmom">Madmom – מדויק (מומלץ)</option>
@@ -70,6 +70,8 @@
                 <span>ביטים לאקורד</span>
                 <input id="beatsPerChord" type="number" min="1" max="16" step="1" value="4">
               </label>
+
+              <button id="reanalyzeBtn" class="reanalyze-btn" type="button" hidden>נתח מחדש</button>
 
               <p id="audioFileName" class="file-name">נטען כרגע: song2.mp3</p>
               <audio id="audio" controls preload="metadata" src="media/audio/song2.mp3"></audio>

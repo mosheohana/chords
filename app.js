@@ -22,12 +22,14 @@ const upNext = document.querySelector("#upNext");
 const nextLabel = document.querySelector("#nextLabel");
 const lyricsLine = document.querySelector("#lyricsLine");
 const lyricsStatus = document.querySelector("#lyricsStatus");
+const reanalyzeBtn = document.querySelector("#reanalyzeBtn");
 
 let chords = [];
 let lyrics = [];
 let activeIndex = -1;
 let activeLyricIndex = -1;
 let selectedAudioUrl = null;
+let lastUploadedFile = null;
 
 if ("scrollRestoration" in history) {
   history.scrollRestoration = "manual";
@@ -449,7 +451,16 @@ audio.addEventListener("timeupdate", updatePlaybackUi);
 audio.addEventListener("play", updatePlaybackUi);
 audio.addEventListener("seeked", updatePlaybackUi);
 audioFile?.addEventListener("change", (event) => {
-  analyzeSelectedAudio(event.target.files?.[0]);
+  const file = event.target.files?.[0];
+  if (file) {
+    lastUploadedFile = file;
+    if (reanalyzeBtn) reanalyzeBtn.hidden = false;
+  }
+  analyzeSelectedAudio(file);
+});
+
+reanalyzeBtn?.addEventListener("click", () => {
+  if (lastUploadedFile) analyzeSelectedAudio(lastUploadedFile);
 });
 lyricsFile?.addEventListener("change", (event) => {
   loadSelectedLyricsFile(event.target.files?.[0]);
