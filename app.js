@@ -289,36 +289,64 @@ async function analyzeSelectedAudio(file) {
   }
 
   const detector = detectorSelect?.value || "madmom";
+  const detectorLabel = detectorSelect?.options[detectorSelect.selectedIndex]?.text || detector;
   const formData = new FormData();
   formData.append("audio", file);
   formData.append("beatsPerChord", beatsPerChordInput?.value || "4");
   formData.append("detector", detector);
 
-  const detectorLabel = detectorSelect?.options[detectorSelect.selectedIndex]?.text || detector;
-
   if (audioFileName) {
-    audioFileName.textContent = `מנתח אקורדים עבור: ${file.name}`;
+    audioFileName.textContent = `מעלה קובץ: ${file.name}`;
   }
-  currentRange.textContent = `מעלה קובץ ומחשב אקורדים (${detectorLabel})...`;
+  currentRange.textContent = `מעלה קובץ...`;
 
   try {
-    const response = await fetch(`${BACKEND_URL}/api/analyze-audio`, {
+    // 1. Upload file → get job ID immediately
+    const uploadRes = await fetch(`${BACKEND_URL}/api/analyze-audio`, {
       method: "POST",
       body: formData,
     });
+    const uploadData = await uploadRes.json();
+    if (!uploadRes.ok) throw new Error(uploadData.error || `HTTP ${uploadRes.status}`);
 
-    const result = await response.json();
-    if (!response.ok) {
-      throw new Error(result.error || `HTTP ${response.status}`);
+    const jobId = uploadData.jobId;
+    if (audioFileName) {
+      audioFileName.textContent = `מנתח: ${file.name} (${detectorLabel})`;
     }
 
+    // 2. Poll until done
+    let dots = 0;
+    const result = await new Promise((resolve, reject) => {
+      const interval = setInterval(async () => {
+        try {
+          dots = (dots + 1) % 4;
+          currentRange.textContent = `מנתח אקורדים${".".repeat(dots + 1)}`;
+
+          const pollRes = await fetch(`${BACKEND_URL}/api/job/${jobId}`);
+          const job = await pollRes.json();
+
+          if (job.status === "done") {
+            clearInterval(interval);
+            resolve(job);
+          } else if (job.status === "error") {
+            clearInterval(interval);
+            reject(new Error(job.error || "שגיאה בניתוח"));
+          }
+        } catch (err) {
+          clearInterval(interval);
+          reject(err);
+        }
+      }, 2000);
+    });
+
+    // 3. Load results
     if (selectedAudioUrl) {
       URL.revokeObjectURL(selectedAudioUrl);
       selectedAudioUrl = null;
     }
 
     audio.pause();
-    audio.src = result.audioUrl;
+    audio.src = `${BACKEND_URL}${result.audioUrl}`;
     audio.load();
     setChords(result.chords);
     elapsed.textContent = "0:00";
@@ -327,13 +355,14 @@ async function analyzeSelectedAudio(file) {
 
     const tempoText = result.tempo ? ` · ${Math.round(result.tempo)} BPM` : "";
     if (audioFileName) {
-      audioFileName.textContent = `נטען ונותח: ${file.name}${tempoText}`;
+      audioFileName.textContent = `נותח: ${file.name}${tempoText}`;
     }
     currentRange.textContent = `נוצרו ${result.chords.length} מקטעי אקורדים (${detectorLabel})`;
+
   } catch (error) {
     loadSelectedAudioPreview(file);
     if (audioFileName) {
-      audioFileName.textContent = `נטען מקומית ללא אקורדים חדשים: ${file.name}`;
+      audioFileName.textContent = `${file.name}`;
     }
     currentRange.textContent = `השרת לא ניתח את הקובץ: ${error.message}`;
   }
