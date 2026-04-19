@@ -35,8 +35,12 @@
             <video id="heroVideo" class="hero-video" src="media/herovideo2.mp4" playsinline autoplay muted loop></video>
             <div class="hero-shade" aria-hidden="true"></div>
             <div class="hero-video-controls" aria-label="Hero video controls">
-              <button id="heroVideoPlay" type="button">Pause video</button>
-              <button id="heroVideoMute" type="button">Sound on</button>
+              <button id="heroVideoPlay" class="hero-icon-button" type="button" aria-label="Pause video">
+                <span class="hero-video-play-icon" aria-hidden="true"></span>
+              </button>
+              <button id="heroVideoMute" class="hero-icon-button" type="button" aria-label="Sound on">
+                <span class="hero-video-sound-icon" aria-hidden="true"></span>
+              </button>
             </div>
             <p class="eyebrow">Home music studio</p>
             <h1 id="heroTitle">Find the chords inside your track.</h1>

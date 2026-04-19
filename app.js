@@ -29,6 +29,8 @@ const analysisAnimation = document.querySelector("#analysisAnimation");
 const heroVideo = document.querySelector("#heroVideo");
 const heroVideoPlay = document.querySelector("#heroVideoPlay");
 const heroVideoMute = document.querySelector("#heroVideoMute");
+const heroVideoPlayIcon = document.querySelector(".hero-video-play-icon");
+const heroVideoSoundIcon = document.querySelector(".hero-video-sound-icon");
 
 let chords = [];
 let lyrics = [];
@@ -69,10 +71,12 @@ window.addEventListener("pointermove", (event) => {
 
 function updateHeroVideoControls() {
   if (heroVideoPlay && heroVideo) {
-    heroVideoPlay.textContent = heroVideo.paused ? "Play video" : "Pause video";
+    heroVideoPlay.setAttribute("aria-label", heroVideo.paused ? "Play video" : "Pause video");
+    heroVideoPlayIcon?.classList.toggle("is-paused", heroVideo.paused);
   }
   if (heroVideoMute && heroVideo) {
-    heroVideoMute.textContent = heroVideo.muted ? "Sound on" : "Sound off";
+    heroVideoMute.setAttribute("aria-label", heroVideo.muted ? "Sound on" : "Sound off");
+    heroVideoSoundIcon?.classList.toggle("is-muted", heroVideo.muted);
   }
 }
 
