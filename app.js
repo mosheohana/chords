@@ -23,6 +23,7 @@ const nextLabel = document.querySelector("#nextLabel");
 const lyricsLine = document.querySelector("#lyricsLine");
 const lyricsStatus = document.querySelector("#lyricsStatus");
 const reanalyzeBtn = document.querySelector("#reanalyzeBtn");
+const analysisAnimation = document.querySelector("#analysisAnimation");
 
 let chords = [];
 let lyrics = [];
@@ -242,6 +243,11 @@ function setActiveChord(index) {
   activeIndex = index;
 }
 
+function setAnalysisUi(isAnalyzing) {
+  analysisAnimation?.toggleAttribute("hidden", !isAnalyzing);
+  audio.closest(".main-chord-display")?.classList.toggle("is-analyzing", isAnalyzing);
+}
+
 function updatePlaybackUi() {
   const currentTime = audio.currentTime;
   const audioDuration = audio.duration || (chords.length ? chords[chords.length - 1].end : 0);
@@ -298,7 +304,8 @@ async function analyzeSelectedAudio(file) {
   if (audioFileName) {
     audioFileName.textContent = `מעלה קובץ: ${file.name}`;
   }
-  currentRange.textContent = `מעלה קובץ...`;
+  currentRange.textContent = "";
+  setAnalysisUi(true);
 
   try {
     // 1. Upload file → get job ID immediately
@@ -319,17 +326,13 @@ async function analyzeSelectedAudio(file) {
       throw new Error("השרת לא החזיר מזהה משימה");
     }
     if (audioFileName) {
-      audioFileName.textContent = `מנתח: ${file.name} (${detectorLabel})`;
+      audioFileName.textContent = file.name;
     }
 
     // 2. Poll until done
-    let dots = 0;
     const result = await new Promise((resolve, reject) => {
       const interval = setInterval(async () => {
         try {
-          dots = (dots + 1) % 4;
-          currentRange.textContent = `מנתח אקורדים${".".repeat(dots + 1)}`;
-
           const pollRes = await fetch(`${BACKEND_URL}/api/job/${jobId}`);
           const job = await pollRes.json();
 
@@ -356,6 +359,8 @@ async function analyzeSelectedAudio(file) {
       audioFileName.textContent = `${file.name}`;
     }
     currentRange.textContent = `השרת לא ניתח את הקובץ: ${error.message}`;
+  } finally {
+    setAnalysisUi(false);
   }
 }
 
