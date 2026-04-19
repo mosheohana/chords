@@ -31,6 +31,8 @@ let activeIndex = -1;
 let activeLyricIndex = -1;
 let selectedAudioUrl = null;
 let lastUploadedFile = null;
+let ambientFrame = null;
+let ambientPointer = { x: window.innerWidth / 2, y: window.innerHeight * 0.24 };
 
 if ("scrollRestoration" in history) {
   history.scrollRestoration = "manual";
@@ -41,6 +43,23 @@ window.addEventListener("load", () => {
     history.replaceState(null, "", window.location.pathname + window.location.search);
   }
   window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+});
+
+function updateAmbientLight() {
+  ambientFrame = null;
+  document.documentElement.style.setProperty("--cursor-x", `${ambientPointer.x}px`);
+  document.documentElement.style.setProperty("--cursor-y", `${ambientPointer.y}px`);
+}
+
+window.addEventListener("pointermove", (event) => {
+  if (event.pointerType !== "mouse") {
+    return;
+  }
+
+  ambientPointer = { x: event.clientX, y: event.clientY };
+  if (ambientFrame === null) {
+    ambientFrame = requestAnimationFrame(updateAmbientLight);
+  }
 });
 
 function formatTime(seconds) {

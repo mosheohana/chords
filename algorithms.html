@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>How ChordLab Detects Chords</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=algorithms-page-1">
+  </head>
+  <body>
+    <div class="studio-layout info-page">
+      <header class="top-bar site-header">
+        <a class="brand" href="index.html#top">ChordLab</a>
+        <nav aria-label="Main navigation">
+          <a href="index.html#workspace">Studio</a>
+          <a href="algorithms.html" aria-current="page">Algorithms</a>
+          <a href="index.html#flow">How it works</a>
+        </nav>
+      </header>
+
+      <main>
+        <section class="algorithm-hero" aria-labelledby="algorithmHeroTitle">
+          <div>
+            <p class="eyebrow">Behind the sound</p>
+            <h1 id="algorithmHeroTitle">איך ChordLab מנסה למצוא אקורדים?</h1>
+            <p>
+              כל אלגוריתם מקשיב לשיר קצת אחרת. חלק מחפשים צבעים הרמוניים,
+              חלק מחפשים תווים, וחלק משתמשים במודל שאומן על הרבה מוזיקה.
+            </p>
+            <a class="primary-link" href="index.html#workspace">חזרה לסטודיו</a>
+          </div>
+          <img
+            src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=1200&q=80"
+            alt="Home music studio with instruments and warm lighting"
+          >
+        </section>
+
+        <section class="algorithm-grid" aria-label="Chord detection algorithms">
+          <article class="algorithm-card">
+            <img
+              src="https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?auto=format&fit=crop&w=900&q=80"
+              alt="Piano keys in soft light"
+            >
+            <div>
+              <p class="eyebrow">Fast</p>
+              <h2>Basic</h2>
+              <p>
+                Basic מסתכל על ה"צבע" של הצלילים בכל רגע. הוא בודק אילו תווים
+                הכי בולטים, ומשווה אותם לתבניות פשוטות של אקורדים כמו מז'ור ומינור.
+              </p>
+              <p class="algorithm-note">מתאים כשאתם רוצים תשובה מהירה וניסיון ראשון.</p>
+            </div>
+          </article>
+
+          <article class="algorithm-card">
+            <img
+              src="https://images.unsplash.com/photo-1510915361894-db8b60106cb1?auto=format&fit=crop&w=900&q=80"
+              alt="Guitar in a recording room"
+            >
+            <div>
+              <p class="eyebrow">Deep model</p>
+              <h2>Madmom</h2>
+              <p>
+                Madmom משתמש במודל שלמד לזהות אקורדים מתוך הרבה דוגמאות.
+                במקום רק להשוות תבניות, הוא מנסה להבין את הרצף המוזיקלי כמו מאזין מנוסה.
+              </p>
+              <p class="algorithm-note">מתאים כשחשובה יותר דיוק מאשר מהירות.</p>
+            </div>
+          </article>
+
+          <article class="algorithm-card">
+            <img
+              src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=900&q=80"
+              alt="Musician playing guitar on stage"
+            >
+            <div>
+              <p class="eyebrow">Studio pass</p>
+              <h2>Pro</h2>
+              <p>
+                Pro משלב כמה רעיונות: הוא משתמש בקצב של השיר, מחלק אותו לחלונות מוזיקליים,
+                ואז בוחר אקורד מתוך אוצר רחב יותר של סוגים כמו 7, maj7, sus ו-dim.
+              </p>
+              <p class="algorithm-note">מתאים כשאתם מוכנים לחכות בשביל תוצאה עשירה יותר.</p>
+            </div>
+          </article>
+
+          <article class="algorithm-card">
+            <img
+              src="https://images.unsplash.com/photo-1507838153414-b4b713384a76?auto=format&fit=crop&w=900&q=80"
+              alt="Sheet music and piano"
+            >
+            <div>
+              <p class="eyebrow">Notes first</p>
+              <h2>Basic Pitch</h2>
+              <p>
+                Basic Pitch קודם מנסה לזהות תווים בודדים מתוך ההקלטה.
+                אחר כך ChordLab מקבץ את התווים האלה לפי זמן ומנסה להבין איזה אקורד הם יוצרים יחד.
+              </p>
+              <p class="algorithm-note">מתאים כשיש כלי נגינה ברורים ומעט עומס בהקלטה.</p>
+            </div>
+          </article>
+        </section>
+
+        <section class="algorithm-summary">
+          <div class="section-kicker">Quick choice</div>
+          <h2>אז במה לבחור?</h2>
+          <div class="summary-grid">
+            <p><strong>רוצים מהר?</strong> התחילו עם Basic.</p>
+            <p><strong>רוצים מדויק יותר?</strong> נסו Madmom.</p>
+            <p><strong>רוצים ניתוח עשיר?</strong> נסו Pro.</p>
+            <p><strong>יש נגינה נקייה?</strong> שווה לבדוק Basic Pitch.</p>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <footer class="site-footer">
+      <a class="github-link" href="https://github.com/mosheohana/chords" target="_blank" rel="noreferrer">
+        <span>GitHub</span>
+      </a>
+    </footer>
+  </body>
+</html>
