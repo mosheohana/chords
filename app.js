@@ -31,6 +31,7 @@ const heroVideoPlay = document.querySelector("#heroVideoPlay");
 const heroVideoMute = document.querySelector("#heroVideoMute");
 const heroVideoPlayIcon = document.querySelector(".hero-video-play-icon");
 const heroVideoSoundIcon = document.querySelector(".hero-video-sound-icon");
+const workspaceSection = document.querySelector("#workspace");
 
 let chords = [];
 let lyrics = [];
@@ -107,6 +108,37 @@ heroVideoMute?.addEventListener("click", () => {
 heroVideo?.addEventListener("play", updateHeroVideoControls);
 heroVideo?.addEventListener("pause", updateHeroVideoControls);
 updateHeroVideoControls();
+
+function muteHeroVideo() {
+  if (!heroVideo || heroVideo.muted) {
+    return;
+  }
+
+  heroVideo.muted = true;
+  updateHeroVideoControls();
+}
+
+if (workspaceSection && "IntersectionObserver" in window) {
+  const workspaceObserver = new IntersectionObserver((entries) => {
+    const workspaceEntry = entries.find((entry) => entry.target === workspaceSection);
+    if (workspaceEntry?.isIntersecting && workspaceEntry.intersectionRatio >= 0.35) {
+      muteHeroVideo();
+    }
+  }, { threshold: [0.35] });
+
+  workspaceObserver.observe(workspaceSection);
+} else {
+  window.addEventListener("scroll", () => {
+    if (!workspaceSection) {
+      return;
+    }
+
+    const rect = workspaceSection.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 0.65 && rect.bottom > window.innerHeight * 0.35) {
+      muteHeroVideo();
+    }
+  }, { passive: true });
+}
 
 function formatTime(seconds) {
   if (!Number.isFinite(seconds)) {
