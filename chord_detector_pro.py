@@ -22,8 +22,19 @@ Usage:
  thid if for creating new file"""
 
 import argparse
+import collections
+import collections.abc
 import json
 import sys
+
+# madmom 0.16.1 uses removed aliases from collections (Python 3.10+)
+for _name in (
+    "Callable", "Iterable", "Iterator", "Generator",
+    "Mapping", "MutableMapping", "MutableSequence", "MutableSet",
+    "Sequence", "Set",
+):
+    if not hasattr(collections, _name):
+        setattr(collections, _name, getattr(collections.abc, _name))
 
 import librosa
 import numpy as np
