@@ -440,11 +440,11 @@ h3 {
 
 .main-chord-display {
   grid-area: monitor;
-  display: grid;
+  display: flex;
   min-width: 0;
   min-height: 430px;
-  grid-template-columns: minmax(160px, 0.42fr) minmax(0, 1fr);
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
   padding: 28px;
   background:
     linear-gradient(180deg, rgba(242, 184, 75, 0.08), transparent 56%),
@@ -452,26 +452,6 @@ h3 {
   box-shadow:
     inset 0 0 0 1px rgba(255, 255, 255, 0.035),
     0 26px 80px rgba(0, 0, 0, 0.46);
-}
-
-.player-visual {
-  width: 100%;
-  max-width: 260px;
-  aspect-ratio: 1;
-  margin: 0;
-  overflow: hidden;
-  border: 1px solid var(--accent-line);
-  border-radius: 8px;
-  background: var(--accent-soft);
-  box-shadow: 0 0 38px rgba(242, 184, 75, 0.14);
-}
-
-.player-visual img {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-  filter: saturate(0.84) contrast(1.08) brightness(0.9);
 }
 
 .main-chord-display.is-analyzing {
@@ -483,7 +463,6 @@ h3 {
 }
 
 .main-chord-display h2 {
-  grid-column: 2;
   margin: 0 0 12px;
   color: var(--text);
   font-size: 7rem;
@@ -493,12 +472,7 @@ h3 {
   text-shadow: 0 0 34px rgba(242, 184, 75, 0.2);
 }
 
-.main-chord-display > .eyebrow {
-  grid-column: 2;
-}
-
 #currentRange {
-  grid-column: 2;
   min-height: 1.4em;
   margin-bottom: 26px;
   color: var(--muted);
@@ -506,7 +480,6 @@ h3 {
 }
 
 .analysis-animation {
-  grid-column: 2;
   width: min(360px, 100%);
   margin: 4px 0 26px;
   padding: 18px;
@@ -634,14 +607,12 @@ h3 {
 }
 
 audio {
-  grid-column: 1 / -1;
   width: 100%;
   margin-bottom: 18px;
   accent-color: var(--accent);
 }
 
 .time-row {
-  grid-column: 1 / -1;
   display: grid;
   grid-template-columns: 54px 1fr 54px;
   gap: 10px;
@@ -1135,27 +1106,11 @@ audio {
   }
 
   .main-chord-display {
-    grid-template-columns: 1fr;
     min-height: 300px;
   }
 
-  .player-visual {
-    max-width: 190px;
-    margin-bottom: 18px;
-  }
-
-  #currentRange,
-  .analysis-animation {
-    grid-column: 1;
-  }
-
   .main-chord-display h2 {
-    grid-column: 1;
     font-size: 4.2rem;
-  }
-
-  .main-chord-display > .eyebrow {
-    grid-column: 1;
   }
 
   .lyrics-line {
