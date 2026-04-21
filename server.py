@@ -84,6 +84,19 @@ def _run_job(job_id: str, file_path: str, detector: str, beats_per_chord: int, m
 
 
 def _run_detector(file_path, detector, beats_per_chord, min_duration):
+    if detector == "hmm":
+        from chord_detector_hmm import detect_chords_hmm, chords_to_dicts
+        chords, tempo = detect_chords_hmm(
+            file_path,
+            min_duration=min_duration,
+            min_confidence=0.0,
+            chroma_kind="cqt",
+            prefer_madmom=True,
+            include_inversions=False,
+            compare_naive=False,
+        )
+        return chords_to_dicts(chords), tempo
+
     if detector == "madmom":
         from chord_detector_madmom import detect_chords, chords_to_dicts
         chords = detect_chords(file_path, min_duration=min_duration)

@@ -64,6 +64,16 @@ Hybrid detector. Tries madmom first, then falls back to Basic Pitch.
 .venv\Scripts\python.exe chord_detector_pro.py "media/audio/song2.mp3" --json "data/chords/song2_chords_pro.json" --engine auto --beats 4 --min-duration 0.5
 ```
 
+### `chord_detector_hmm.py`
+
+Beat-synchronous HMM detector. Uses HPSS, beat-level CQT chroma, bass chroma,
+key-aware non-uniform transitions, Viterbi decoding, confidence scores, and
+short-segment smoothing.
+
+```powershell
+.venv\Scripts\python.exe chord_detector_hmm.py "media/audio/song2.mp3" --json "data/chords/song2_chords_hmm.json" --compare-naive --min-duration 0.5
+```
+
 ### `chord_detector_basic.py`
 
 Fast librosa/chroma-based detector.
