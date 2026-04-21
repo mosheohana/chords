@@ -289,6 +289,10 @@ function setChords(nextChords) {
 }
 
 function renderUpNext(index) {
+  if (!upNext || !nextLabel) {
+    return;
+  }
+
   const nextChords = chords.slice(index + 1, index + 5);
   upNext.innerHTML = "";
 

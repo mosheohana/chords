@@ -997,6 +997,15 @@ audio {
   padding: 22px;
 }
 
+.next-section {
+  min-height: 180px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
 .up-next {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
@@ -1065,7 +1074,6 @@ audio {
 
   main#top > .hero,
   main#top > .workspace,
-  main#top > .next-section,
   main#top > .flow-section {
     position: sticky;
     isolation: isolate;
@@ -1085,8 +1093,10 @@ audio {
     z-index: 2;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 14px;
+    min-height: 118vh;
+    padding-bottom: 220px;
   }
 
   main#top > .workspace > .section-kicker {
@@ -1095,18 +1105,11 @@ audio {
 
   main#top > .workspace .studio-workspace-grid {
     flex: 0 1 auto;
-    max-height: calc(100vh - 156px);
-  }
-
-  main#top > .next-section {
-    z-index: 3;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    max-height: none;
   }
 
   main#top > .flow-section {
-    z-index: 4;
+    z-index: 3;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -1121,19 +1124,16 @@ audio {
 
   .hero-copy,
   main#top > .workspace,
-  main#top > .next-section,
   main#top > .flow-section {
     overflow: hidden;
   }
 
   main#top > .workspace,
-  main#top > .next-section,
   main#top > .flow-section {
     background: transparent;
   }
 
   main#top > .workspace::before,
-  main#top > .next-section::before,
   main#top > .flow-section::before {
     position: absolute;
     inset: 0;
