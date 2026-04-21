@@ -32,6 +32,7 @@ import shutil
 import sys
 import threading
 import time
+import traceback
 import uuid
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -48,6 +49,10 @@ _jobs_lock = threading.Lock()
 JOB_TTL = 60 * 30  # clean up jobs older than 30 minutes
 
 
+def _log(message: str):
+    print(f"[server] {message}", flush=True)
+
+
 def _cors_headers():
     return {
         "Access-Control-Allow-Origin": "*",
@@ -61,6 +66,13 @@ def _cors_headers():
 # ---------------------------------------------------------------------------
 
 def _run_job(job_id: str, file_path: str, detector: str, beats_per_chord: int, min_duration: float):
+    file_size_mb = Path(file_path).stat().st_size / (1024 * 1024)
+    started_at = time.time()
+    _log(
+        f"job {job_id} started detector={detector} "
+        f"beats_per_chord={beats_per_chord} min_duration={min_duration} "
+        f"file={Path(file_path).name} size_mb={file_size_mb:.2f}"
+    )
     with _jobs_lock:
         _jobs[job_id]["status"] = "processing"
 
@@ -75,7 +87,17 @@ def _run_job(job_id: str, file_path: str, detector: str, beats_per_chord: int, m
                 "tempo": tempo_val,
                 "detector": detector,
             })
+        elapsed = time.time() - started_at
+        _log(
+            f"job {job_id} finished status=done detector={detector} "
+            f"segments={len(chords)} tempo={tempo_val} elapsed_s={elapsed:.2f}"
+        )
     except Exception as exc:
+        elapsed = time.time() - started_at
+        _log(
+            f"job {job_id} failed detector={detector} "
+            f"error={exc!r} elapsed_s={elapsed:.2f}\n{traceback.format_exc()}"
+        )
         with _jobs_lock:
             _jobs[job_id].update({
                 "status": "error",
@@ -199,7 +221,12 @@ class ChordRequestHandler(SimpleHTTPRequestHandler):
         min_duration    = self.parse_float(form, "minDuration", default=0.5, minimum=0.1)
 
         upload_path = self.save_upload(file_item)
+        file_size_mb = upload_path.stat().st_size / (1024 * 1024)
         job_id = uuid.uuid4().hex
+        _log(
+            f"received upload job={job_id} original_name={file_item.filename!r} "
+            f"saved_name={upload_path.name} size_mb={file_size_mb:.2f} detector={detector}"
+        )
 
         with _jobs_lock:
             _jobs[job_id] = {
@@ -226,6 +253,7 @@ class ChordRequestHandler(SimpleHTTPRequestHandler):
             job = _jobs.get(job_id)
 
         if job is None:
+            _log(f"job status requested but missing job={job_id}")
             self.send_json({"error": "Job not found"}, status=404)
             return
 
@@ -279,7 +307,7 @@ class ChordRequestHandler(SimpleHTTPRequestHandler):
 def main():
     port = int(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT_PORT
     server = ThreadingHTTPServer(("0.0.0.0", port), ChordRequestHandler)
-    print(f"ChordLab API listening on port {port}", flush=True)
+    _log(f"ChordLab API listening on port {port}")
     server.serve_forever()
 
 
