@@ -101,23 +101,19 @@
               <h2 id="currentChord">--</h2>
               <p id="currentRange">Press Play to start</p>
               <div id="analysisAnimation" class="analysis-animation" aria-label="Analyzing audio" hidden>
-                <div class="studio-strings" aria-hidden="true">
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                </div>
-                <div class="piano-loader" aria-hidden="true">
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
+                <video
+                  id="analysisVideo"
+                  class="analysis-video"
+                  src="media/waiting video.mp4"
+                  playsinline
+                  muted
+                  loop
+                ></video>
+                <div class="analysis-shade" aria-hidden="true"></div>
+                <div class="analysis-copy">
+                  <p class="analysis-kicker">Uploading audio</p>
+                  <h3>Analyzing your track</h3>
+                  <p>We are extracting chords and preparing the timeline for playback.</p>
                 </div>
               </div>
 

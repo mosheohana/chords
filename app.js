@@ -26,6 +26,7 @@ const lyricsLine = document.querySelector("#lyricsLine");
 const lyricsStatus = document.querySelector("#lyricsStatus");
 const reanalyzeBtn = document.querySelector("#reanalyzeBtn");
 const analysisAnimation = document.querySelector("#analysisAnimation");
+const analysisVideo = document.querySelector("#analysisVideo");
 const heroVideo = document.querySelector("#heroVideo");
 const heroVideoPlay = document.querySelector("#heroVideoPlay");
 const heroVideoMute = document.querySelector("#heroVideoMute");
@@ -347,6 +348,15 @@ function setActiveChord(index) {
 function setAnalysisUi(isAnalyzing) {
   analysisAnimation?.toggleAttribute("hidden", !isAnalyzing);
   audio.closest(".main-chord-display")?.classList.toggle("is-analyzing", isAnalyzing);
+  if (analysisVideo) {
+    if (isAnalyzing) {
+      analysisVideo.currentTime = 0;
+      analysisVideo.play().catch(() => {});
+    } else {
+      analysisVideo.pause();
+      analysisVideo.currentTime = 0;
+    }
+  }
 }
 
 function updatePlaybackUi() {
