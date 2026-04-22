@@ -373,16 +373,12 @@ h3 {
   box-shadow: 0 0 42px rgba(242, 184, 75, 0.26);
 }
 
-.workspace,
-.next-section,
-.flow-section {
+.workspace {
   margin-top: 24px;
 }
 
 .hero,
-.workspace,
-.next-section,
-.flow-section {
+.workspace {
   scroll-margin-top: 86px;
 }
 
@@ -416,11 +412,9 @@ h3 {
 
 .upload-card,
 .algorithm-selector,
-.analysis-status-card,
 .main-chord-display,
 .lyrics-panel,
 .timeline-panel,
-.next-section,
 .flow-section {
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -432,15 +426,13 @@ h3 {
 }
 
 .upload-card,
-.algorithm-selector,
-.analysis-status-card {
+.algorithm-selector {
   min-width: 0;
   padding: 14px;
 }
 
 .upload-card h2,
-.algorithm-selector h2,
-.analysis-status-card h2 {
+.algorithm-selector h2 {
   margin-bottom: 14px;
   color: var(--text);
   font-size: 1rem;
@@ -556,32 +548,6 @@ h3 {
   box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
-.analysis-status-card[hidden] {
-  display: none;
-}
-
-.analysis-status-card {
-  display: grid;
-  gap: 14px;
-}
-
-.analysis-status-head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.analysis-status-head h2 {
-  margin-bottom: 0;
-}
-
-.analysis-status-card p:last-child {
-  margin-bottom: 0;
-  color: var(--muted);
-  line-height: 1.6;
-}
-
 .analysis-sound-button {
   flex: 0 0 auto;
   width: 44px;
@@ -644,7 +610,9 @@ h3 {
   position: absolute;
   inset: 0;
   z-index: 6;
-  display: block;
+  display: flex;
+  align-items: flex-end;
+  padding: 24px;
   background: rgba(5, 7, 8, 0.3);
   isolation: isolate;
 }
@@ -675,12 +643,61 @@ h3 {
     radial-gradient(circle at 50% 28%, rgba(242, 184, 75, 0.22), transparent 32rem);
 }
 
+.analysis-progress-shell {
+  position: relative;
+  width: min(520px, 100%);
+  margin-inline: auto;
+  padding: 16px 18px 18px;
+  border: 1px solid rgba(242, 184, 75, 0.28);
+  border-radius: 8px;
+  background: rgba(7, 8, 9, 0.4);
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(10px);
+}
+
 .analysis-kicker {
   margin-bottom: 10px;
   color: var(--accent);
   font-size: 0.82rem;
   font-weight: 900;
   text-transform: uppercase;
+}
+
+.analysis-progress-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+#analysisProgressLabel {
+  margin-bottom: 0;
+  color: var(--text);
+  font-size: 0.92rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.analysis-progress-track {
+  display: block;
+  width: 100%;
+  height: 24px;
+  overflow: hidden;
+  border: 1px solid rgba(244, 241, 232, 0.38);
+  border-radius: 999px;
+  background: rgba(7, 8, 9, 0.86);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+#analysisProgressFill {
+  display: block;
+  width: 0%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #f2b84b, #ffcf72);
+  box-shadow: 0 0 26px rgba(242, 184, 75, 0.32);
+  transition: width 240ms ease;
 }
 
 .main-chord-display.is-analyzing > :not(.analysis-animation) {
@@ -956,78 +973,12 @@ audio {
   text-align: right;
 }
 
-.next-section,
-.flow-section {
-  padding: 22px;
-}
-
-.next-section {
-  min-height: 180px;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  box-shadow: none;
-  backdrop-filter: none;
-}
-
-.up-next {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-  gap: 12px;
-}
-
-.next-card,
 .flow-grid article {
   min-height: 84px;
   padding: 16px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.045);
-}
-
-.next-card strong {
-  display: block;
-  margin-bottom: 5px;
-  color: var(--text);
-  font-size: 1.45rem;
-}
-
-.next-card span {
-  display: inline-block;
-  color: var(--muted);
-  font-size: 0.88rem;
-  direction: ltr;
-}
-
-.flow-section {
-  margin-bottom: 52px;
-}
-
-.flow-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
-  margin-top: 18px;
-}
-
-.flow-grid article span {
-  display: inline-flex;
-  width: 34px;
-  height: 34px;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 14px;
-  border: 1px solid var(--accent-line);
-  border-radius: 8px;
-  background: var(--accent-soft);
-  color: var(--accent);
-  font-weight: 900;
-}
-
-.flow-grid p {
-  margin-bottom: 0;
-  color: var(--muted);
-  line-height: 1.55;
 }
 
 @media (min-width: 861px) {
@@ -1037,8 +988,7 @@ audio {
   }
 
   main#top > .hero,
-  main#top > .workspace,
-  main#top > .flow-section {
+  main#top > .workspace {
     position: sticky;
     isolation: isolate;
     top: 0;
@@ -1059,8 +1009,8 @@ audio {
     flex-direction: column;
     justify-content: flex-start;
     gap: 14px;
-    min-height: 128vh;
-    padding-bottom: 360px;
+    min-height: 142vh;
+    padding-bottom: 460px;
   }
 
   main#top > .workspace > .section-kicker {
@@ -1072,13 +1022,6 @@ audio {
     max-height: none;
   }
 
-  main#top > .flow-section {
-    z-index: 3;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
   .hero-copy {
     min-height: calc(100vh - 126px);
     border: 1px solid var(--line);
@@ -1087,18 +1030,15 @@ audio {
   }
 
   .hero-copy,
-  main#top > .workspace,
-  main#top > .flow-section {
+  main#top > .workspace {
     overflow: hidden;
   }
 
-  main#top > .workspace,
-  main#top > .flow-section {
+  main#top > .workspace {
     background: transparent;
   }
 
-  main#top > .workspace::before,
-  main#top > .flow-section::before {
+  main#top > .workspace::before {
     position: absolute;
     inset: 0;
     z-index: -1;
@@ -1235,7 +1175,7 @@ audio {
   position: relative;
   z-index: 1;
   width: min(1220px, calc(100% - 32px));
-  margin: 0 auto 28px;
+  margin: 140px auto 28px;
   padding: 18px 0;
   color: var(--muted);
 }
@@ -1370,9 +1310,7 @@ audio {
     grid-template-columns: 1fr;
   }
 
-  .main-chord-display,
-  .next-section,
-  .flow-section {
+  .main-chord-display {
     padding: 16px;
   }
 
@@ -1408,10 +1346,6 @@ audio {
 
   .section-heading p {
     margin-top: 8px;
-  }
-
-  .flow-grid {
-    grid-template-columns: 1fr;
   }
 
   .algorithm-hero,

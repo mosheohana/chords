@@ -28,8 +28,9 @@ const lyricsStatus = document.querySelector("#lyricsStatus");
 const reanalyzeBtn = document.querySelector("#reanalyzeBtn");
 const analysisAnimation = document.querySelector("#analysisAnimation");
 const analysisVideo = document.querySelector("#analysisVideo");
-const analysisStatusCard = document.querySelector("#analysisStatusCard");
 const analysisVideoMute = document.querySelector("#analysisVideoMute");
+const analysisProgressFill = document.querySelector("#analysisProgressFill");
+const analysisProgressLabel = document.querySelector("#analysisProgressLabel");
 const heroVideo = document.querySelector("#heroVideo");
 const heroVideoPlay = document.querySelector("#heroVideoPlay");
 const heroVideoMute = document.querySelector("#heroVideoMute");
@@ -46,6 +47,7 @@ let selectedAudioUrl = null;
 let lastUploadedFile = null;
 let ambientFrame = null;
 let ambientPointer = { x: window.innerWidth / 2, y: window.innerHeight * 0.24 };
+let analysisProgressTimer = null;
 
 if ("scrollRestoration" in history) {
   history.scrollRestoration = "manual";
@@ -362,15 +364,18 @@ function setActiveChord(index) {
 
 function setAnalysisUi(isAnalyzing) {
   analysisAnimation?.toggleAttribute("hidden", !isAnalyzing);
-  analysisStatusCard?.toggleAttribute("hidden", !isAnalyzing);
   audio.closest(".main-chord-display")?.classList.toggle("is-analyzing", isAnalyzing);
   if (analysisVideo) {
     if (isAnalyzing) {
+      setAnalysisProgress(8, "Uploading audio");
       analysisVideo.currentTime = 0;
       analysisVideo.play().catch(() => {});
+      startAnalysisProgressLoop();
     } else {
+      stopAnalysisProgressLoop();
       analysisVideo.pause();
       analysisVideo.currentTime = 0;
+      setAnalysisProgress(0, "Loading");
     }
     updateAnalysisVideoControls();
   }
@@ -380,6 +385,39 @@ function updateAnalysisVideoControls() {
   if (analysisVideoMute && analysisVideo) {
     analysisVideoMute.setAttribute("aria-label", analysisVideo.muted ? "Sound on" : "Sound off");
     analysisVideoSoundIcon?.classList.toggle("is-muted", analysisVideo.muted);
+  }
+}
+
+function setAnalysisProgress(progress, label) {
+  if (analysisProgressFill) {
+    analysisProgressFill.style.width = `${Math.max(0, Math.min(progress, 100))}%`;
+  }
+  if (analysisProgressLabel && label) {
+    analysisProgressLabel.textContent = label;
+  }
+}
+
+function startAnalysisProgressLoop() {
+  if (analysisProgressTimer !== null) {
+    clearInterval(analysisProgressTimer);
+  }
+
+  analysisProgressTimer = window.setInterval(() => {
+    if (!analysisProgressFill) {
+      return;
+    }
+
+    const currentWidth = Number.parseFloat(analysisProgressFill.style.width || "0");
+    if (currentWidth < 88) {
+      setAnalysisProgress(Math.min(currentWidth + 4, 88), "Processing audio");
+    }
+  }, 1600);
+}
+
+function stopAnalysisProgressLoop() {
+  if (analysisProgressTimer !== null) {
+    clearInterval(analysisProgressTimer);
+    analysisProgressTimer = null;
   }
 }
 
@@ -460,6 +498,7 @@ async function analyzeSelectedAudio(file) {
     if (!uploadRes.ok) throw new Error(uploadData.error || `HTTP ${uploadRes.status}`);
 
     if (Array.isArray(uploadData.chords)) {
+      setAnalysisProgress(100, "Finishing analysis");
       applyAnalysisResult(uploadData, file, detectorLabel);
       return;
     }
@@ -471,6 +510,8 @@ async function analyzeSelectedAudio(file) {
     if (audioFileName) {
       audioFileName.textContent = file.name;
     }
+    setAnalysisProgress(34, "Upload complete");
+    startAnalysisProgressLoop();
 
     // 2. Poll until done
     const result = await new Promise((resolve, reject) => {
@@ -507,6 +548,7 @@ async function analyzeSelectedAudio(file) {
     });
 
     // 3. Load results
+    setAnalysisProgress(100, "Finishing analysis");
     applyAnalysisResult(result, file, detectorLabel);
 
   } catch (error) {
