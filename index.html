@@ -11,6 +11,10 @@
       if (location.hash) {
         history.replaceState(null, "", location.pathname + location.search);
       }
+      const savedTheme = localStorage.getItem("chordlab-theme");
+      if (savedTheme === "light") {
+        document.documentElement.dataset.theme = "light";
+      }
       scrollTo(0, 0);
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,7 +25,18 @@
   <body>
     <div class="studio-layout">
       <header class="top-bar site-header">
-        <a class="brand" href="#top">ChordLab</a>
+        <div class="header-brand">
+          <a class="brand" href="#top">ChordLab</a>
+          <button id="themeToggle" class="theme-toggle" type="button" aria-label="Switch to light mode" aria-pressed="false">
+            <span class="theme-toggle-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path d="M12 3.2a4.3 4.3 0 0 1 4.3 4.3c0 1.5-.8 2.7-1.8 3.6-.9.8-1.6 1.5-1.8 2.4h-1.4c-.2-.9-.9-1.6-1.8-2.4-1-.9-1.8-2.1-1.8-3.6A4.3 4.3 0 0 1 12 3.2Z"></path>
+                <path d="M9.5 16.2h5"></path>
+                <path d="M10.1 19h3.8"></path>
+              </svg>
+            </span>
+          </button>
+        </div>
         <nav aria-label="Main navigation">
           <a href="#workspace">Studio</a>
           <a href="algorithms.html">Algorithms</a>
@@ -180,6 +195,28 @@
         <span>GitHub</span>
       </a>
     </footer>
+
+    <script>
+      (() => {
+        const themeToggle = document.querySelector("#themeToggle");
+        if (!themeToggle) return;
+
+        const applyTheme = (theme) => {
+          document.documentElement.dataset.theme = theme;
+          const isLight = theme === "light";
+          themeToggle.setAttribute("aria-pressed", String(isLight));
+          themeToggle.setAttribute("aria-label", isLight ? "Switch to dark mode" : "Switch to light mode");
+        };
+
+        applyTheme(document.documentElement.dataset.theme === "light" ? "light" : "dark");
+
+        themeToggle.addEventListener("click", () => {
+          const nextTheme = document.documentElement.dataset.theme === "light" ? "dark" : "light";
+          localStorage.setItem("chordlab-theme", nextTheme);
+          applyTheme(nextTheme);
+        });
+      })();
+    </script>
 
     <script src="app.js?v=organized-paths-1"></script>
   </body>
