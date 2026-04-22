@@ -94,6 +94,26 @@
                   <input id="beatsPerChord" type="number" min="1" max="16" step="1" value="4">
                 </label>
               </section>
+
+              <section id="analysisStatusCard" class="analysis-status-card" aria-labelledby="analysisStatusTitle" hidden>
+                <div class="analysis-status-head">
+                  <div>
+                    <p class="analysis-kicker">Uploading audio</p>
+                    <h2 id="analysisStatusTitle">Analyzing your track</h2>
+                  </div>
+                  <button id="analysisVideoMute" class="hero-icon-button analysis-sound-button" type="button" aria-label="Sound on">
+                    <span class="hero-video-sound-icon analysis-video-sound-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" focusable="false">
+                        <path class="sound-speaker" d="M3 9.5h4.1L12 5.3v13.4l-4.9-4.2H3z"></path>
+                        <path class="sound-wave sound-wave-inner" d="M15.1 8.6a4.8 4.8 0 0 1 0 6.8"></path>
+                        <path class="sound-wave sound-wave-outer" d="M17.8 5.9a8.6 8.6 0 0 1 0 12.2"></path>
+                        <path class="sound-slash" d="M16 8l5 8"></path>
+                      </svg>
+                    </span>
+                  </button>
+                </div>
+                <p>We are extracting chords and preparing the timeline for playback.</p>
+              </section>
             </aside>
 
             <section class="main-chord-display now-panel" aria-labelledby="currentChordLabel">
@@ -110,11 +130,6 @@
                   loop
                 ></video>
                 <div class="analysis-shade" aria-hidden="true"></div>
-                <div class="analysis-copy">
-                  <p class="analysis-kicker">Uploading audio</p>
-                  <h3>Analyzing your track</h3>
-                  <p>We are extracting chords and preparing the timeline for playback.</p>
-                </div>
               </div>
 
               <audio id="audio" preload="metadata" src="media/audio/song2.mp3"></audio>
@@ -172,11 +187,6 @@
               <span>2</span>
               <h3>Pick a detector</h3>
               <p>Use the fast detector for quick takes or a deeper model for slower analysis.</p>
-            </article>
-            <article>
-              <span>3</span>
-              <h3>Follow the song</h3>
-              <p>Play the track, watch the chord monitor, and scan the timeline.</p>
             </article>
           </div>
         </section>

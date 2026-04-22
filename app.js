@@ -3,6 +3,7 @@
 // Example: "https://chordlab-api.onrender.com"
 // Leave empty to use a relative path (works when running server.py locally).
 const BACKEND_URL = "https://chords-lnp2.onrender.com";
+const ANALYSIS_MAX_WAIT_MS = 180000;
 // ────────────────────────────────────────────────────────────────────────────
 
 const audio = document.querySelector("#audio");
@@ -27,11 +28,14 @@ const lyricsStatus = document.querySelector("#lyricsStatus");
 const reanalyzeBtn = document.querySelector("#reanalyzeBtn");
 const analysisAnimation = document.querySelector("#analysisAnimation");
 const analysisVideo = document.querySelector("#analysisVideo");
+const analysisStatusCard = document.querySelector("#analysisStatusCard");
+const analysisVideoMute = document.querySelector("#analysisVideoMute");
 const heroVideo = document.querySelector("#heroVideo");
 const heroVideoPlay = document.querySelector("#heroVideoPlay");
 const heroVideoMute = document.querySelector("#heroVideoMute");
 const heroVideoPlayIcon = document.querySelector(".hero-video-play-icon");
 const heroVideoSoundIcon = document.querySelector(".hero-video-sound-icon");
+const analysisVideoSoundIcon = document.querySelector(".analysis-video-sound-icon");
 const workspaceSection = document.querySelector("#workspace");
 
 let chords = [];
@@ -106,9 +110,20 @@ heroVideoMute?.addEventListener("click", () => {
   updateHeroVideoControls();
 });
 
+analysisVideoMute?.addEventListener("click", () => {
+  if (!analysisVideo) {
+    return;
+  }
+
+  analysisVideo.muted = !analysisVideo.muted;
+  updateAnalysisVideoControls();
+});
+
 heroVideo?.addEventListener("play", updateHeroVideoControls);
 heroVideo?.addEventListener("pause", updateHeroVideoControls);
 updateHeroVideoControls();
+analysisVideo?.addEventListener("volumechange", updateAnalysisVideoControls);
+updateAnalysisVideoControls();
 
 function muteHeroVideo() {
   if (!heroVideo || heroVideo.muted) {
@@ -347,6 +362,7 @@ function setActiveChord(index) {
 
 function setAnalysisUi(isAnalyzing) {
   analysisAnimation?.toggleAttribute("hidden", !isAnalyzing);
+  analysisStatusCard?.toggleAttribute("hidden", !isAnalyzing);
   audio.closest(".main-chord-display")?.classList.toggle("is-analyzing", isAnalyzing);
   if (analysisVideo) {
     if (isAnalyzing) {
@@ -356,6 +372,14 @@ function setAnalysisUi(isAnalyzing) {
       analysisVideo.pause();
       analysisVideo.currentTime = 0;
     }
+    updateAnalysisVideoControls();
+  }
+}
+
+function updateAnalysisVideoControls() {
+  if (analysisVideoMute && analysisVideo) {
+    analysisVideoMute.setAttribute("aria-label", analysisVideo.muted ? "Sound on" : "Sound off");
+    analysisVideoSoundIcon?.classList.toggle("is-muted", analysisVideo.muted);
   }
 }
 
@@ -450,10 +474,17 @@ async function analyzeSelectedAudio(file) {
 
     // 2. Poll until done
     const result = await new Promise((resolve, reject) => {
+      const pollingStartedAt = Date.now();
       const interval = setInterval(async () => {
         try {
           const pollRes = await fetch(`${BACKEND_URL}/api/job/${jobId}`);
           const job = await pollRes.json();
+
+          if (!pollRes.ok) {
+            clearInterval(interval);
+            reject(new Error(job.error || `HTTP ${pollRes.status}`));
+            return;
+          }
 
           if (job.status === "done") {
             clearInterval(interval);
@@ -461,6 +492,12 @@ async function analyzeSelectedAudio(file) {
           } else if (job.status === "error") {
             clearInterval(interval);
             reject(new Error(job.error || "שגיאה בניתוח"));
+          } else if (job.status !== "pending" && job.status !== "processing") {
+            clearInterval(interval);
+            reject(new Error("Received unexpected job status from server"));
+          } else if (Date.now() - pollingStartedAt > ANALYSIS_MAX_WAIT_MS) {
+            clearInterval(interval);
+            reject(new Error("Analysis took too long. Please try again."));
           }
         } catch (err) {
           clearInterval(interval);
