@@ -28,6 +28,7 @@ for _name in (
 import cgi
 import json
 import mimetypes
+import os
 import shutil
 import sys
 import threading
@@ -305,7 +306,10 @@ class ChordRequestHandler(SimpleHTTPRequestHandler):
 # ---------------------------------------------------------------------------
 
 def main():
-    port = int(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT_PORT
+    if len(sys.argv) > 1:
+        port = int(sys.argv[1])
+    else:
+        port = int(os.environ.get("PORT", DEFAULT_PORT))
     server = ThreadingHTTPServer(("0.0.0.0", port), ChordRequestHandler)
     _log(f"ChordLab API listening on port {port}")
     server.serve_forever()
